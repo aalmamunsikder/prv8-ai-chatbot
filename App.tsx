@@ -77,8 +77,8 @@ const App: React.FC = () => {
             <div className="lg:col-span-4 relative h-[600px] flex items-center justify-center lg:justify-end">
               <ScrollReveal delay={800} className="w-full relative">
                 {/* Floating Abstract Cards */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-md transform rotate-6 animate-float" style={{ animationDelay: '0s' }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 bg-gradient-to-bl from-champagne-400/10 to-transparent border border-champagne-400/20 rounded-2xl backdrop-blur-sm transform -rotate-6 animate-float" style={{ animationDelay: '1.5s' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 glass-card rounded-2xl transform rotate-6 animate-float" style={{ animationDelay: '0s' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 glass-card border-champagne-400/20 rounded-2xl transform -rotate-6 animate-float" style={{ animationDelay: '1.5s' }} />
 
                 <div className="relative z-10 transform translate-y-12 lg:translate-y-0">
                   <ChatWidget />
@@ -89,7 +89,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Brand Strip */}
-        <div className="border-y border-white/[0.03] py-12 bg-black/20 backdrop-blur-sm">
+        <div className="border-y border-white/[0.03] py-12 glass">
           <div className="container mx-auto px-6">
             <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-12">
               {['VOGUE', 'Kinfolk', 'Monocle', 'Bloomberg', 'Architectural Digest'].map((brand, i) => (

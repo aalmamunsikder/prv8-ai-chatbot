@@ -14,9 +14,9 @@ export const MembershipSection: React.FC = () => {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <ScrollReveal>
           <div className="mb-20 text-center">
-            <SectionHeading 
-              title="Membership" 
-              subtitle="Access Levels" 
+            <SectionHeading
+              title="Membership"
+              subtitle="Access Levels"
               alignment="center"
             />
           </div>
@@ -26,12 +26,12 @@ export const MembershipSection: React.FC = () => {
           {MEMBERSHIP_TIERS.map((tier, index) => (
             <ScrollReveal key={tier.id} delay={index * 200}>
               <div className="relative group perspective-1000 h-full">
-                <div 
+                <div
                   className={`
-                    relative h-full p-10 lg:p-14 rounded-xl overflow-hidden transition-all duration-700 hover:-translate-y-2
-                    ${tier.highlight 
-                      ? 'bg-gradient-to-b from-[#151515] to-black border border-champagne-400/40 shadow-[0_0_50px_-20px_rgba(212,175,55,0.15)]' 
-                      : 'bg-[#080808] border border-white/5'}
+                    relative h-full p-10 lg:p-14 rounded-xl overflow-hidden transition-all duration-700 hover:-translate-y-2 glass-card
+                    ${tier.highlight
+                      ? 'border-champagne-400/40 shadow-[0_0_50px_-20px_rgba(212,175,55,0.15)]'
+                      : 'border-white/5'}
                   `}
                 >
                   {/* Metallic Sheen */}
@@ -41,8 +41,8 @@ export const MembershipSection: React.FC = () => {
                   <div className="relative z-10 flex flex-col h-full justify-between">
                     <div>
                       <div className="flex justify-between items-start mb-8">
-                         <h3 className={`font-serif text-3xl italic ${tier.highlight ? 'text-champagne-400' : 'text-white'}`}>{tier.name}</h3>
-                         {tier.highlight && <span className="text-[10px] px-2 py-1 border border-champagne-400 text-champagne-400 uppercase tracking-widest rounded-full shadow-[0_0_10px_rgba(212,175,55,0.3)]">Limited</span>}
+                        <h3 className={`font-serif text-3xl italic ${tier.highlight ? 'text-champagne-400' : 'text-white'}`}>{tier.name}</h3>
+                        {tier.highlight && <span className="text-[10px] px-2 py-1 border border-champagne-400 text-champagne-400 uppercase tracking-widest rounded-full shadow-[0_0_10px_rgba(212,175,55,0.3)]">Limited</span>}
                       </div>
 
                       <div className="mb-10">
@@ -65,8 +65,8 @@ export const MembershipSection: React.FC = () => {
                       </ul>
                     </div>
 
-                    <Button 
-                      variant={tier.highlight ? 'primary' : 'outline'} 
+                    <Button
+                      variant={tier.highlight ? 'primary' : 'outline'}
                       className={`w-full ${tier.highlight ? 'bg-champagne-400 text-obsidian hover:bg-champagne-300' : ''}`}
                     >
                       {tier.ctaText}

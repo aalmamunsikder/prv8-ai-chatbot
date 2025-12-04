@@ -9,13 +9,13 @@ export const TestimonialsSection: React.FC = () => {
     <section className="py-40 relative bg-obsidian">
       <div className="container mx-auto px-6 md:px-12">
         <ScrollReveal>
-            <div className="mb-24">
-                <SectionHeading 
-                  title="Member Stories" 
-                  subtitle="Perspectives" 
-                  alignment="center"
-                />
-            </div>
+          <div className="mb-24">
+            <SectionHeading
+              title="Member Stories"
+              subtitle="Perspectives"
+              alignment="center"
+            />
+          </div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-24 relative">
@@ -25,9 +25,9 @@ export const TestimonialsSection: React.FC = () => {
 
           {TESTIMONIALS.map((item, index) => (
             <ScrollReveal key={item.id} delay={index * 150}>
-              <div className="relative group text-center px-4 pt-8">
+              <div className="relative group text-center px-8 pt-12 pb-8 glass rounded-2xl hover:bg-white/[0.05] transition-all duration-500">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                   <Quote className="w-8 h-8 text-champagne-400 fill-champagne-400/20" />
+                  <Quote className="w-8 h-8 text-champagne-400 fill-champagne-400/20" />
                 </div>
 
                 <div className="mb-8 relative z-10">
@@ -35,14 +35,14 @@ export const TestimonialsSection: React.FC = () => {
                     "{item.quote}"
                   </p>
                 </div>
-                
+
                 <div className="flex flex-col items-center gap-2">
-                   <p className="text-xs font-bold text-white uppercase tracking-[0.15em]">
-                     {item.author}
-                   </p>
-                   <p className="text-[10px] text-champagne-400 uppercase tracking-widest">
-                     {item.role}, {item.location}
-                   </p>
+                  <p className="text-xs font-bold text-white uppercase tracking-[0.15em]">
+                    {item.author}
+                  </p>
+                  <p className="text-[10px] text-champagne-400 uppercase tracking-widest">
+                    {item.role}, {item.location}
+                  </p>
                 </div>
               </div>
             </ScrollReveal>

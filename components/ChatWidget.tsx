@@ -7,10 +7,10 @@ export const ChatWidget: React.FC = () => {
     <div className="w-full max-w-[380px] mx-auto relative group perspective-1000">
       {/* Glow Effect behind */}
       <div className="absolute inset-0 bg-champagne-400/20 blur-[80px] rounded-full opacity-40 group-hover:opacity-60 transition-opacity duration-1000" />
-      
+
       {/* Main Glass Panel */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-[#050505]/60 backdrop-blur-2xl border border-white/[0.08] shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
-        
+      <div className="relative overflow-hidden rounded-[2rem] glass-card transition-transform duration-700 hover:scale-[1.02]">
+
         {/* Decorative Top Line */}
         <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
@@ -26,16 +26,16 @@ export const ChatWidget: React.FC = () => {
         {/* Messages */}
         <div className="h-[320px] flex flex-col p-6 space-y-6 overflow-y-auto no-scrollbar [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]">
           {INITIAL_CHAT_MESSAGES.map((msg, i) => (
-            <div 
-              key={msg.id} 
+            <div
+              key={msg.id}
               className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} opacity-0 animate-fade-in-up`}
               style={{ animationDelay: `${i * 0.4}s` }}
             >
-              <div 
+              <div
                 className={`
                   max-w-[90%] p-4 text-xs leading-relaxed font-light backdrop-blur-sm
-                  ${msg.sender === 'user' 
-                    ? 'bg-white/[0.08] text-white border border-white/5 rounded-2xl rounded-tr-sm' 
+                  ${msg.sender === 'user'
+                    ? 'bg-white/[0.08] text-white border border-white/5 rounded-2xl rounded-tr-sm'
                     : 'text-white/70 border-l border-white/10 pl-4'}
                 `}
               >
@@ -48,8 +48,8 @@ export const ChatWidget: React.FC = () => {
         {/* Input Area */}
         <div className="p-4 bg-white/[0.02] border-t border-white/[0.05]">
           <div className="relative">
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Ask Lumina..."
               className="w-full bg-transparent border-b border-white/10 py-3 pr-10 text-xs text-white placeholder-white/20 focus:outline-none focus:border-champagne-400/50 transition-colors font-light"
             />

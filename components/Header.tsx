@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
           className={`
             flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
             ${isScrolled
-              ? 'w-[90%] md:w-[90%] lg:w-[800px] px-6 py-3 bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/[0.08] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+              ? 'w-[90%] md:w-[90%] lg:w-[800px] px-6 py-3 glass-heavy rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
               : 'w-full px-6 md:px-12 bg-transparent border-transparent'}
           `}
         >
@@ -62,7 +62,7 @@ export const Header: React.FC = () => {
           {/* Action - Only show on large screens */}
           <div className="hidden md:block shrink-0">
             <a href="#membership" className={`
-                   text-[10px] font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap
+                   text-xs font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap
                    ${isScrolled ? 'text-champagne-400' : 'text-white hover:text-champagne-400'}
                 `}>
               Login
@@ -75,7 +75,7 @@ export const Header: React.FC = () => {
       {/* Mobile Overlay */}
       <div
         className={`
-          fixed inset-0 z-[60] bg-obsidian/98 backdrop-blur-3xl
+          fixed inset-0 z-[60] glass-heavy
           transition-all duration-700 cubic-bezier(0.7, 0, 0.3, 1)
           ${mobileMenuOpen ? 'opacity-100 visible clip-circle-full' : 'opacity-0 invisible pointer-events-none'}
         `}
