@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@config "./tailwind.config.js";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+  background-color: #050505;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+/* Text Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.2);
+  color: #F9F5EB;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
