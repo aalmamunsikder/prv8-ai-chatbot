@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from './components/Header';
-import { ChatWidget } from './components/ChatWidget';
+import { Val8Widget } from './components/val8/Val8Widget';
 import { FeaturesSection } from './components/FeaturesSection';
 import { MembershipSection } from './components/MembershipSection';
 import { CuratedSection } from './components/CuratedSection';
@@ -80,9 +80,7 @@ const App: React.FC = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 glass-card rounded-2xl transform rotate-6 animate-float" style={{ animationDelay: '0s' }} />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 glass-card border-champagne-400/20 rounded-2xl transform -rotate-6 animate-float" style={{ animationDelay: '1.5s' }} />
 
-                <div className="relative z-10 transform translate-y-12 lg:translate-y-0">
-                  <ChatWidget />
-                </div>
+                {/* Removed ChatWidget from here */}
               </ScrollReveal>
             </div>
           </div>
@@ -109,6 +107,7 @@ const App: React.FC = () => {
 
       </main>
       <Footer />
+      <Val8Widget />
     </div>
   );
 };
