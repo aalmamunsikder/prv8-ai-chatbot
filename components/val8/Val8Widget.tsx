@@ -82,7 +82,7 @@ const Val8WidgetContent: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed bg-obsidian rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-white/10 relative z-50"
+                        className="fixed glass-atlas rounded-[32px] shadow-2xl overflow-hidden flex flex-col relative z-50"
                         style={{
                             position: 'fixed',
                             ...(view === 'dashboard' ? {
@@ -129,6 +129,12 @@ const Val8WidgetContent: React.FC = () => {
                                     )}
                                 </button>
                                 <button
+                                    onClick={() => setView(view === 'chat' ? 'dashboard' : 'chat')}
+                                    className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+                                >
+                                    <Maximize2 className="w-4 h-4" />
+                                </button>
+                                <button
                                     onClick={handleClose}
                                     className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors"
                                 >
@@ -156,8 +162,18 @@ const Val8WidgetContent: React.FC = () => {
                                         <p className="text-xs text-white/40 font-light tracking-wide">Connecting to global concierge network</p>
                                     </motion.div>
                                 ) : view === 'dashboard' ? (
-                                    <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full">
-                                        <Dashboard />
+                                    <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex">
+                                        {/* Left Panel: Chat Interface */}
+                                        <div className="w-[400px] border-r border-white/10 flex flex-col bg-obsidian/50 backdrop-blur-xl relative z-10">
+                                            <ChatInterface />
+                                            <BookingFlow />
+                                            <PostBookingSummary />
+                                        </div>
+
+                                        {/* Right Panel: Dashboard */}
+                                        <div className="flex-1 bg-black/20 relative z-0">
+                                            <Dashboard />
+                                        </div>
                                     </motion.div>
                                 ) : (
                                     <motion.div key="chat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full">

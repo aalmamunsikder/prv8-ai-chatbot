@@ -18,33 +18,7 @@ export const Dashboard: React.FC = () => {
 
     return (
         <div className="h-full flex flex-col bg-obsidian">
-            {/* Header - Consolidated */}
-            <div className="h-16 px-6 border-b border-white/5 bg-white/5 backdrop-blur-md shrink-0 flex items-center justify-between">
-                {/* Left: Return to Concierge */}
-                <button
-                    onClick={() => setView('chat')}
-                    className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
-                >
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
-                        <ArrowLeft className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium">Concierge</span>
-                </button>
-
-                {/* Right: User Info & Logout */}
-                <div className="flex items-center gap-4">
-                    <span className="text-white/40 text-xs hidden md:block">{user.email}</span>
-                    <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
-                    <button
-                        onClick={logout}
-                        className="flex items-center gap-2 text-white/40 hover:text-red-400 transition-colors"
-                        title="Sign Out"
-                    >
-                        <span className="text-xs font-medium uppercase tracking-wider">Sign Out</span>
-                        <LogOut className="w-4 h-4" />
-                    </button>
-                </div>
-            </div>
+            {/* Header Removed for Split View */}
 
             {/* Content - Bento Grid */}
             <div className="flex-1 overflow-y-auto p-6 no-scrollbar">

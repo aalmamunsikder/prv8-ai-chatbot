@@ -29,8 +29,8 @@ export const BentoItem: React.FC<BentoItemProps> = ({
     return (
         <div
             className={`
-        bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden relative group
-        hover:border-champagne-400/30 transition-colors duration-500
+        glass-atlas rounded-3xl overflow-hidden relative group
+        hover:border-champagne-400/30 transition-all duration-500
         ${colSpan > 1 ? `md:col-span-${colSpan}` : ''}
         ${rowSpan > 1 ? `row-span-${rowSpan}` : ''}
         ${className}
