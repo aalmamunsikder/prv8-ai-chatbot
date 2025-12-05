@@ -72,6 +72,9 @@ interface Val8ContextType {
   addTrip: (trip: Trip) => void;
   showLoginModal: boolean;
   setShowLoginModal: (show: boolean) => void;
+  activeAction: string | null;
+  handleWidgetAction: (action: string) => void;
+  clearActiveAction: () => void;
 }
 
 const Val8Context = createContext<Val8ContextType | undefined>(undefined);
@@ -90,19 +93,24 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // New State Implementation
   // Initialize user from localStorage if available
   const [user, setUser] = useState<UserProfile | null>(() => {
-    const savedUser = localStorage.getItem('val8_user');
-    return savedUser ? JSON.parse(savedUser) : null;
+    if (typeof window !== 'undefined') {
+      const savedUser = localStorage.getItem('val8_user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    }
+    return null;
   });
 
   const [view, setView] = useState<'chat' | 'dashboard'>('chat');
   const [trips, setTrips] = useState<Trip[]>([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const login = (email: string, name: string = 'Guest') => {
     const newUser = { name, email, isAuthenticated: true };
     setUser(newUser);
     localStorage.setItem('val8_user', JSON.stringify(newUser));
     setShowLoginModal(false);
+    setView('dashboard');
 
     // If we have no trips, add a mock one for the demo
     if (trips.length === 0) {
@@ -134,6 +142,15 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setChatHistory(prev => [...prev, newMessage]);
   };
 
+  const handleWidgetAction = (action: string) => {
+    setActiveAction(action);
+    setView('chat');
+  };
+
+  const clearActiveAction = () => {
+    setActiveAction(null);
+  };
+
   return (
     <Val8Context.Provider
       value={{
@@ -163,7 +180,10 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
         trips,
         addTrip,
         showLoginModal,
-        setShowLoginModal
+        setShowLoginModal,
+        activeAction,
+        handleWidgetAction,
+        clearActiveAction
       }}
     >
       {children}

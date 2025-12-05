@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
                   <span className="text-xs font-bold uppercase tracking-widest text-white/30">Explore</span>
                   <div className="flex flex-col gap-4">
                     {NAV_ITEMS.map(item => (
-                      <a key={item.label} href={item.href} className="text-sm text-white/60 hover:text-champagne-400 transition-colors hover:translate-x-1 duration-300 inline-block">
+                      <a key={item.label} href={item.href} className="text-sm text-white/60 hover:text-champagne-400 transition-colors duration-300 inline-block relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-champagne-400 after:transition-all after:duration-300 hover:after:w-full w-fit">
                         {item.label}
                       </a>
                     ))}

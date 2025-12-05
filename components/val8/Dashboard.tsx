@@ -12,7 +12,7 @@ import { SchedulingWidget } from './dashboard/SchedulingWidget';
 import { TimezoneWidget } from './dashboard/TimezoneWidget';
 
 export const Dashboard: React.FC = () => {
-    const { user, logout, setView } = useVal8();
+    const { user, logout, setView, handleWidgetAction } = useVal8();
 
     if (!user) return null;
 
@@ -54,12 +54,12 @@ export const Dashboard: React.FC = () => {
                     {/* --- ROW 1 --- */}
 
                     {/* Calendar (2 cols) */}
-                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Show my full itinerary")}>
                         <CalendarWidget />
                     </div>
 
                     {/* Location (2 cols) */}
-                    <div className="md:col-span-2 bg-obsidian border border-white/10 rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                    <div className="md:col-span-2 bg-obsidian border border-white/10 rounded-3xl overflow-hidden p-5 flex flex-col justify-between cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Tell me more about Miami")}>
                         <div className="flex justify-between items-start">
                             <div>
                                 <h3 className="text-white font-serif text-xl">Miami</h3>
@@ -73,46 +73,46 @@ export const Dashboard: React.FC = () => {
                     </div>
 
                     {/* Weather (2 cols) */}
-                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("What is the detailed forecast?")}>
                         <WeatherWidget />
                     </div>
 
                     {/* Timezones (2 cols - Stacked) */}
                     <div className="md:col-span-2 flex flex-col gap-4">
-                        <div className="flex-1 rounded-3xl overflow-hidden">
+                        <div className="flex-1 rounded-3xl overflow-hidden cursor-pointer" onClick={() => handleWidgetAction("Set a reminder for Eastern Time")}>
                             <TimezoneWidget city="Eastern Daytime" time="14:20" offset="UTC -4:00" />
                         </div>
-                        <div className="flex-1 rounded-3xl overflow-hidden">
+                        <div className="flex-1 rounded-3xl overflow-hidden cursor-pointer" onClick={() => handleWidgetAction("Set a reminder for Pacific Time")}>
                             <TimezoneWidget city="Pacific Daytime" time="11:20" offset="UTC -7:00" />
                         </div>
                     </div>
 
                     {/* Hotel (4 cols - Wide Right) */}
-                    <div className="md:col-span-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Show hotel details")}>
                         <StayWidget />
                     </div>
 
                     {/* --- ROW 2 --- */}
 
                     {/* Flight (6 cols - Wide Left) */}
-                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Manage my flight")}>
                         <FlightWidget />
                     </div>
 
                     {/* Ride (3 cols) */}
-                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Book a ride")}>
                         <RideWidget />
                     </div>
 
                     {/* Scheduling (3 cols) */}
-                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Schedule an event")}>
                         <SchedulingWidget />
                     </div>
 
                     {/* --- ROW 3 --- */}
 
                     {/* Dining (3 cols) */}
-                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Reserve a table at Waterfront Kitchen")}>
                         <ActivityWidget
                             title="Waterfront Kitchen"
                             subtitle="$30-50 | American"
@@ -122,7 +122,7 @@ export const Dashboard: React.FC = () => {
                     </div>
 
                     {/* Shopping (3 cols) */}
-                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Buy SPF 50 Sunscreen")}>
                         <ActivityWidget
                             title="SPF 50 Sunscreen"
                             subtitle="124k ratings"
@@ -133,7 +133,7 @@ export const Dashboard: React.FC = () => {
                     </div>
 
                     {/* Local Interest (6 cols - Wide) */}
-                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-champagne-400/30 transition-colors" onClick={() => handleWidgetAction("Plan a beach day")}>
                         <ActivityWidget
                             title="Miami's Best Beaches"
                             subtitle="Curated list of seaside sanctuaries"

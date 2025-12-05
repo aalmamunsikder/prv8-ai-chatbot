@@ -10,8 +10,42 @@ import { LoginModal } from './LoginModal';
 import { Dashboard } from './Dashboard';
 
 const Val8WidgetContent: React.FC = () => {
-    const { isExpanded, setIsExpanded, bookingState, chatHistory, setShowExitModal, view, setView, user, setShowLoginModal } = useVal8();
+    const {
+        isExpanded,
+        setIsExpanded,
+        bookingState,
+        chatHistory,
+        setShowExitModal,
+        view,
+        setView,
+        user,
+        setShowLoginModal,
+        activeAction,
+        clearActiveAction,
+        addMessage
+    } = useVal8();
     const [showLoader, setShowLoader] = useState(false);
+
+    // Handle incoming widget actions
+    React.useEffect(() => {
+        if (activeAction) {
+            // Add user message
+            addMessage({
+                sender: 'user',
+                text: activeAction
+            });
+
+            // Simulate AI response
+            setTimeout(() => {
+                addMessage({
+                    sender: 'val8',
+                    text: `I can certainly help you with "${activeAction}". What specific details would you like to know?`
+                });
+            }, 1000);
+
+            clearActiveAction();
+        }
+    }, [activeAction, addMessage, clearActiveAction]);
 
     const handleExpand = () => {
         setIsExpanded(true);
@@ -43,25 +77,31 @@ const Val8WidgetContent: React.FC = () => {
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{
-                            opacity: 1,
-                            scale: 1,
-                            y: 0,
-                            width: view === 'dashboard' ? '90vw' : '400px',
-                            height: view === 'dashboard' ? '85vh' : '700px',
-                            x: view === 'dashboard' ? '-50%' : 0,
-                            left: view === 'dashboard' ? '50%' : 'auto',
-                            right: view === 'dashboard' ? 'auto' : '1.5rem', // 6 = 1.5rem
-                            bottom: view === 'dashboard' ? '50%' : '1.5rem',
-                            translateY: view === 'dashboard' ? '50%' : 0
-                        }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
                         className="fixed bg-obsidian rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-white/10 relative z-50"
                         style={{
-                            // Ensure it stays fixed relative to viewport
-                            position: 'fixed'
+                            position: 'fixed',
+                            ...(view === 'dashboard' ? {
+                                top: '7.5vh',
+                                bottom: '7.5vh',
+                                left: '5vw',
+                                right: '5vw',
+                                width: 'auto',
+                                height: 'auto',
+                                transform: 'none'
+                            } : {
+                                top: 'auto',
+                                bottom: '1.5rem',
+                                left: 'auto',
+                                right: '1.5rem',
+                                width: '400px',
+                                height: '700px',
+                                transform: 'none'
+                            })
                         }}
                     >
                         {/* Header */}
