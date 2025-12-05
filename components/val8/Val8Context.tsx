@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useAuth } from '../../src/contexts/AuthContext';
 
 // Types for the context
 export type UserIntent = 'planning' | 'browsing' | 'booking' | null;
@@ -30,6 +31,7 @@ export interface HotelCard {
   tags: string[];
 }
 
+// Re-export type compatible with AuthContext or alias it
 export interface UserProfile {
   name: string;
   email: string;
@@ -62,7 +64,8 @@ interface Val8ContextType {
   setSelectedHotel: (hotel: HotelCard | null) => void;
   showExitModal: boolean;
   setShowExitModal: (show: boolean) => void;
-  // New State
+
+  // Auth & View
   user: UserProfile | null;
   login: (email: string, name?: string) => void;
   logout: () => void;
@@ -80,6 +83,8 @@ interface Val8ContextType {
 const Val8Context = createContext<Val8ContextType | undefined>(undefined);
 
 export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { user: authUser, login: authLogin, logout: authLogout } = useAuth();
+
   const [currentFrame, setCurrentFrame] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false); // Start minimized
   const [userIntent, setUserIntent] = useState<UserIntent>(null);
@@ -90,15 +95,12 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [selectedHotel, setSelectedHotel] = useState<HotelCard | null>(null);
   const [showExitModal, setShowExitModal] = useState(false);
 
-  // New State Implementation
-  // Initialize user from localStorage if available
-  const [user, setUser] = useState<UserProfile | null>(() => {
-    if (typeof window !== 'undefined') {
-      const savedUser = localStorage.getItem('val8_user');
-      return savedUser ? JSON.parse(savedUser) : null;
-    }
-    return null;
-  });
+  // Map AuthContext user to Val8 UserProfile
+  const user: UserProfile | null = authUser ? {
+    name: authUser.name,
+    email: authUser.email,
+    isAuthenticated: true
+  } : null;
 
   const [view, setView] = useState<'chat' | 'dashboard'>('chat');
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -106,22 +108,13 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const login = (email: string, name: string = 'Guest') => {
-    const newUser = { name, email, isAuthenticated: true };
-    setUser(newUser);
-    localStorage.setItem('val8_user', JSON.stringify(newUser));
+    authLogin(email, name);
     setShowLoginModal(false);
     setView('dashboard');
-
-    // If we have no trips, add a mock one for the demo
-    if (trips.length === 0) {
-      // We'll add this in the Dashboard component or here if needed, 
-      // but for now let's keep it clean.
-    }
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('val8_user');
+    authLogout();
     setView('chat');
   };
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../src/contexts/AuthContext';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,11 +35,11 @@ export const Header: React.FC = () => {
         >
 
           {/* Logo */}
-          <a href="#" className="relative group shrink-0 z-50">
+          <Link to="/" className="relative group shrink-0 z-50">
             <span className="font-serif text-xl tracking-[0.2em] text-primary font-medium group-hover:text-white transition-colors duration-500 whitespace-nowrap">
               LUMINA
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className={`hidden md:flex items-center gap-8 ${isScrolled ? 'text-xs' : 'text-xs'}`}>
@@ -61,12 +64,26 @@ export const Header: React.FC = () => {
 
           {/* Action - Only show on large screens */}
           <div className="hidden md:block shrink-0">
-            <a href="#membership" className={`
-                   text-xs font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap
-                   ${isScrolled ? 'text-primary' : 'text-white hover:text-primary'}
-                `}>
-              Login
-            </a>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <span className="text-xs font-bold uppercase tracking-widest text-primary">
+                  {user?.name?.split(' ')[0]}
+                </span>
+                <button
+                  onClick={logout}
+                  className="text-white/40 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className={`
+                    text-xs font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap
+                    ${isScrolled ? 'text-primary' : 'text-white hover:text-primary'}
+                  `}>
+                Login
+              </Link>
+            )}
           </div>
 
         </div>
@@ -99,9 +116,23 @@ export const Header: React.FC = () => {
               {item.label}
             </a>
           ))}
-          <a href="#" className="mt-12 text-xs font-bold uppercase tracking-[0.3em] text-primary border border-primary/30 px-8 py-4 rounded-full hover:bg-primary hover:text-surface transition-all">
-            Member Login
-          </a>
+
+          {isAuthenticated ? (
+            <div className="flex flex-col items-center gap-4 mt-8">
+              <span className="text-xl text-primary font-serif">{user?.name}</span>
+              <button onClick={logout} className="text-white/40 hover:text-white text-sm uppercase tracking-widest">
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="mt-12 text-xs font-bold uppercase tracking-[0.3em] text-primary border border-primary/30 px-8 py-4 rounded-full hover:bg-primary hover:text-surface transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Member Login
+            </Link>
+          )}
         </div>
       </div>
     </>
