@@ -1,113 +1,148 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, MapPin, LogOut, MessageSquare, Clock, ChevronRight } from 'lucide-react';
+import { LogOut, MessageSquare, ArrowLeft } from 'lucide-react';
 import { useVal8 } from './Val8Context';
+import { BentoGrid, BentoItem } from './dashboard/BentoGrid';
+import { WeatherWidget } from './dashboard/WeatherWidget';
+import { FlightWidget } from './dashboard/FlightWidget';
+import { StayWidget } from './dashboard/StayWidget';
+import { CalendarWidget } from './dashboard/CalendarWidget';
+import { ActivityWidget } from './dashboard/ActivityWidget';
+import { RideWidget } from './dashboard/RideWidget';
+import { SchedulingWidget } from './dashboard/SchedulingWidget';
+import { TimezoneWidget } from './dashboard/TimezoneWidget';
 
 export const Dashboard: React.FC = () => {
-    const { user, trips, setView, logout } = useVal8();
+    const { user, logout, setView } = useVal8();
 
     if (!user) return null;
 
     return (
         <div className="h-full flex flex-col bg-obsidian">
-            {/* Header */}
-            <div className="p-6 border-b border-white/5 bg-white/5 backdrop-blur-md">
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-serif text-white">Dashboard</h2>
+            {/* Header - Consolidated */}
+            <div className="h-16 px-6 border-b border-white/5 bg-white/5 backdrop-blur-md shrink-0 flex items-center justify-between">
+                {/* Left: Return to Concierge */}
+                <button
+                    onClick={() => setView('chat')}
+                    className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
+                >
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                        <ArrowLeft className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium">Concierge</span>
+                </button>
+
+                {/* Right: User Info & Logout */}
+                <div className="flex items-center gap-4">
+                    <span className="text-white/40 text-xs hidden md:block">{user.email}</span>
+                    <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
                     <button
                         onClick={logout}
-                        className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-colors"
+                        className="flex items-center gap-2 text-white/40 hover:text-red-400 transition-colors"
+                        title="Sign Out"
                     >
+                        <span className="text-xs font-medium uppercase tracking-wider">Sign Out</span>
                         <LogOut className="w-4 h-4" />
                     </button>
                 </div>
-                <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-champagne-400 flex items-center justify-center text-obsidian font-bold text-lg">
-                        {user.name.charAt(0)}
-                    </div>
-                    <div>
-                        <p className="text-white font-medium">{user.name}</p>
-                        <p className="text-white/40 text-xs">{user.email}</p>
-                    </div>
-                </div>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 no-scrollbar">
-                {/* Upcoming Trips */}
-                <section>
-                    <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider mb-4">Upcoming Trips</h3>
-                    {trips.filter(t => t.status === 'upcoming').length > 0 ? (
-                        <div className="space-y-4">
-                            {trips.filter(t => t.status === 'upcoming').map(trip => (
-                                <div key={trip.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden group hover:border-champagne-400/50 transition-colors">
-                                    <div className="h-32 relative">
-                                        <img src={trip.hotel.image} alt={trip.hotel.name} className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian/80 to-transparent" />
-                                        <div className="absolute bottom-3 left-3">
-                                            <h4 className="text-white font-serif text-lg">{trip.hotel.name}</h4>
-                                            <div className="flex items-center gap-1 text-white/60 text-xs">
-                                                <MapPin className="w-3 h-3" />
-                                                <span>{trip.hotel.location}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="p-4 flex items-center justify-between">
-                                        <div className="flex items-center gap-2 text-white/60 text-xs">
-                                            <Calendar className="w-3 h-3" />
-                                            <span>{trip.dates}</span>
-                                        </div>
-                                        <button className="text-champagne-400 text-xs font-medium hover:text-white transition-colors">
-                                            View Itinerary
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-8 bg-white/5 rounded-xl border border-white/5 border-dashed">
-                            <p className="text-white/40 text-sm mb-4">No upcoming trips.</p>
-                            <button
-                                onClick={() => setView('chat')}
-                                className="px-4 py-2 bg-champagne-400 text-obsidian rounded-lg text-xs font-medium hover:bg-champagne-300 transition-colors"
-                            >
-                                Plan a Trip
-                            </button>
-                        </div>
-                    )}
-                </section>
+            {/* Content - Bento Grid */}
+            <div className="flex-1 overflow-y-auto p-6 no-scrollbar">
+                {/* Using a 12-column grid for precise layout matching the reference */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[180px]">
 
-                {/* Past Trips */}
-                <section>
-                    <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider mb-4">Past Trips</h3>
-                    <div className="space-y-3">
-                        {[1, 2].map((_, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5 opacity-60 hover:opacity-100 transition-opacity">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                                        <Clock className="w-4 h-4 text-white/40" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white text-sm font-medium">Paris Getaway</p>
-                                        <p className="text-white/40 text-xs">Oct 2023</p>
-                                    </div>
-                                </div>
-                                <ChevronRight className="w-4 h-4 text-white/20" />
+                    {/* --- ROW 1 --- */}
+
+                    {/* Calendar (2 cols) */}
+                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <CalendarWidget />
+                    </div>
+
+                    {/* Location (2 cols) */}
+                    <div className="md:col-span-2 bg-obsidian border border-white/10 rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h3 className="text-white font-serif text-xl">Miami</h3>
+                                <p className="text-white/60 text-[10px] uppercase tracking-wider">Florida</p>
                             </div>
-                        ))}
+                            <div className="px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-bold uppercase tracking-widest border border-emerald-500/20">
+                                Completed
+                            </div>
+                        </div>
+                        <p className="text-white/40 text-xs">June 6-9</p>
                     </div>
-                </section>
-            </div>
 
-            {/* Footer Action */}
-            <div className="p-4 border-t border-white/5 bg-black/20">
-                <button
-                    onClick={() => setView('chat')}
-                    className="w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                >
-                    <MessageSquare className="w-4 h-4" />
-                    Return to Concierge
-                </button>
+                    {/* Weather (2 cols) */}
+                    <div className="md:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <WeatherWidget />
+                    </div>
+
+                    {/* Timezones (2 cols - Stacked) */}
+                    <div className="md:col-span-2 flex flex-col gap-4">
+                        <div className="flex-1 rounded-3xl overflow-hidden">
+                            <TimezoneWidget city="Eastern Daytime" time="14:20" offset="UTC -4:00" />
+                        </div>
+                        <div className="flex-1 rounded-3xl overflow-hidden">
+                            <TimezoneWidget city="Pacific Daytime" time="11:20" offset="UTC -7:00" />
+                        </div>
+                    </div>
+
+                    {/* Hotel (4 cols - Wide Right) */}
+                    <div className="md:col-span-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <StayWidget />
+                    </div>
+
+                    {/* --- ROW 2 --- */}
+
+                    {/* Flight (6 cols - Wide Left) */}
+                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <FlightWidget />
+                    </div>
+
+                    {/* Ride (3 cols) */}
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <RideWidget />
+                    </div>
+
+                    {/* Scheduling (3 cols) */}
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <SchedulingWidget />
+                    </div>
+
+                    {/* --- ROW 3 --- */}
+
+                    {/* Dining (3 cols) */}
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <ActivityWidget
+                            title="Waterfront Kitchen"
+                            subtitle="$30-50 | American"
+                            image="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop"
+                            category="Dining"
+                        />
+                    </div>
+
+                    {/* Shopping (3 cols) */}
+                    <div className="md:col-span-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <ActivityWidget
+                            title="SPF 50 Sunscreen"
+                            subtitle="124k ratings"
+                            price="$8.97"
+                            image="https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=2070&auto=format&fit=crop"
+                            category="Shopping"
+                        />
+                    </div>
+
+                    {/* Local Interest (6 cols - Wide) */}
+                    <div className="md:col-span-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden">
+                        <ActivityWidget
+                            title="Miami's Best Beaches"
+                            subtitle="Curated list of seaside sanctuaries"
+                            image="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
+                            category="Local Interest"
+                        />
+                    </div>
+
+                </div>
             </div>
         </div>
     );

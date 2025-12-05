@@ -44,10 +44,25 @@ const Val8WidgetContent: React.FC = () => {
                 {isExpanded && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        animate={{
+                            opacity: 1,
+                            scale: 1,
+                            y: 0,
+                            width: view === 'dashboard' ? '90vw' : '400px',
+                            height: view === 'dashboard' ? '85vh' : '700px',
+                            x: view === 'dashboard' ? '-50%' : 0,
+                            left: view === 'dashboard' ? '50%' : 'auto',
+                            right: view === 'dashboard' ? 'auto' : '1.5rem', // 6 = 1.5rem
+                            bottom: view === 'dashboard' ? '50%' : '1.5rem',
+                            translateY: view === 'dashboard' ? '50%' : 0
+                        }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="w-[400px] h-[700px] bg-obsidian rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-white/10 relative z-50"
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed bg-obsidian rounded-[32px] shadow-2xl overflow-hidden flex flex-col border border-white/10 relative z-50"
+                        style={{
+                            // Ensure it stays fixed relative to viewport
+                            position: 'fixed'
+                        }}
                     >
                         {/* Header */}
                         <div className="h-16 bg-white/5 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 shrink-0 relative z-20">

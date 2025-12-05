@@ -1,0 +1,30 @@
+import React from 'react';
+import { Clock } from 'lucide-react';
+
+interface TimezoneWidgetProps {
+    city: string;
+    time: string;
+    offset: string;
+}
+
+export const TimezoneWidget: React.FC<TimezoneWidgetProps> = ({ city, time, offset }) => {
+    return (
+        <div className="h-full p-4 flex flex-col justify-center bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl relative overflow-hidden group hover:bg-white/10 hover:border-champagne-400/30 transition-all duration-500">
+            {/* Liquid Glass Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors border border-white/5">
+                    <Clock className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+                </div>
+                <div>
+                    <p className="text-white font-medium text-sm">{city}</p>
+                    <div className="flex items-center gap-2">
+                        <span className="text-white/80 text-xs font-light">{time}</span>
+                        <span className="text-white/40 text-[10px] uppercase tracking-wider">{offset}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

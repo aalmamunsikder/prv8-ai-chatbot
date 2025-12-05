@@ -88,18 +88,32 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [showExitModal, setShowExitModal] = useState(false);
 
   // New State Implementation
-  const [user, setUser] = useState<UserProfile | null>(null);
+  // Initialize user from localStorage if available
+  const [user, setUser] = useState<UserProfile | null>(() => {
+    const savedUser = localStorage.getItem('val8_user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
   const [view, setView] = useState<'chat' | 'dashboard'>('chat');
   const [trips, setTrips] = useState<Trip[]>([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const login = (email: string, name: string = 'Guest') => {
-    setUser({ name, email, isAuthenticated: true });
+    const newUser = { name, email, isAuthenticated: true };
+    setUser(newUser);
+    localStorage.setItem('val8_user', JSON.stringify(newUser));
     setShowLoginModal(false);
+
+    // If we have no trips, add a mock one for the demo
+    if (trips.length === 0) {
+      // We'll add this in the Dashboard component or here if needed, 
+      // but for now let's keep it clean.
+    }
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('val8_user');
     setView('chat');
   };
 
