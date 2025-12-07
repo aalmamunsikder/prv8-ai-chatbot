@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Send, MapPin, Compass, Plane, Search } from 'lucide-react';
 import { useVal8, HotelCard } from './Val8Context';
 import { CardStack } from './CardStack';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 
 const INITIAL_HOTELS: HotelCard[] = [
   {
@@ -58,11 +59,106 @@ const MODERN_HOTELS: HotelCard[] = [
 ];
 
 export const ChatInterface: React.FC = () => {
-  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState } = useVal8();
+  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState, isDemoMode, demoStep, setDemoStep, isExpanded } = useVal8();
+  const { speak, stop } = useTextToSpeech();
   const [inputValue, setInputValue] = useState('');
   const [cards, setCards] = useState<HotelCard[]>(INITIAL_HOTELS);
   const [hasShownCards, setHasShownCards] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Stop audio when widget closes or demo mode ends
+  useEffect(() => {
+    if (!isExpanded || !isDemoMode) {
+      stop();
+    }
+  }, [isExpanded, isDemoMode, stop]);
+
+  // Demo Script aligned with video.md but adapted for Dubai
+  const DEMO_SCRIPT = [
+    {
+      userText: "I'm planning a trip to Dubai.",
+      aiResponse: "Excellent. Weather is 95° and sunny. I'll handle everything for next month. Want flights, hotel, or activities first?",
+      nextStep: 1
+    },
+    {
+      userText: "Flights.",
+      aiResponse: "I've got you nonstop from SFO to Dubai on Emirates, Business Class. Want me to hold seats?",
+      nextStep: 2
+    },
+    {
+      userText: "Yes.",
+      aiResponse: "Done. I'd recommend the One&Only Royal Mirage for your stay. Arabian Court Suite with Sea View. Secure it?",
+      nextStep: 3
+    },
+    {
+      userText: "Secure it.",
+      aiResponse: "Locked in. Complimentary Chauffeur-drive service is included with your flight. Shall I schedule the pickup?",
+      nextStep: 4
+    },
+    {
+      userText: "Yes, schedule it.",
+      aiResponse: "Confirmed. For dining, I've found a table at Ossiano — underwater fine dining. Friday at 8pm?",
+      nextStep: 5
+    },
+    {
+      userText: "That sounds amazing. Book it.",
+      aiResponse: "Reserved. Also — high SPF sunscreen is recommended for the desert sun. Shall I have SunSport SPF 50 waiting in your suite?",
+      nextStep: 6
+    },
+    {
+      userText: "Yes please.",
+      aiResponse: "Added. Finally, a private desert safari with vintage Land Rovers is highly rated. Shall I add this experience?",
+      nextStep: 7
+    },
+    {
+      userText: "Yes, add it.",
+      aiResponse: "Done. Your Dubai itinerary is fully organized. I'll notify you of any updates."
+    }
+  ];
+
+  const runDemoStep = async () => {
+    if (demoStep >= DEMO_SCRIPT.length) return;
+
+    const step = DEMO_SCRIPT[demoStep];
+
+    // Simulate typing
+    let currentText = "";
+    for (let i = 0; i < step.userText.length; i++) {
+      await new Promise(r => setTimeout(r, 40));
+      currentText += step.userText[i];
+      setInputValue(currentText);
+    }
+
+    await new Promise(r => setTimeout(r, 400));
+
+    // "Send" the message
+    setInputValue('');
+    addMessage({
+      sender: 'user',
+      text: step.userText,
+      type: 'text'
+    });
+
+    // AI Response (with slight delay for "thinking")
+    setTimeout(() => {
+      addMessage({
+        sender: 'val8',
+        text: step.aiResponse,
+        type: 'text'
+      });
+
+      // Speak the response and advance ONLY when done
+      speak(step.aiResponse, () => {
+        // Small pause after speaking before next step triggers to simulate human reaction time
+        setTimeout(() => {
+          if (step.nextStep !== undefined) {
+            setDemoStep(step.nextStep);
+          }
+        }, 500);
+      });
+
+    }, 1200);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -72,7 +168,27 @@ export const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [chatHistory]);
 
+  // Auto-run demo steps
+  useEffect(() => {
+    if (isDemoMode && demoStep < DEMO_SCRIPT.length) {
+      // Voice callback handles the "wait for speech", so we just need a tiny functional delay/debounce
+      // This timer essentially "starts" the next user action simulation
+      const delay = 300;
+
+      const timer = setTimeout(() => {
+        runDemoStep();
+      }, delay);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isDemoMode, demoStep]);
+
   const handleSend = () => {
+    if (isDemoMode) {
+      runDemoStep();
+      return;
+    }
+
     if (!inputValue.trim()) return;
 
     const userText = inputValue;
@@ -123,6 +239,8 @@ export const ChatInterface: React.FC = () => {
   };
 
   const handleQuickAction = (action: string) => {
+    if (isDemoMode) return; // Disable quick actions in demo mode
+
     addMessage({
       sender: 'user',
       text: action,
@@ -168,6 +286,7 @@ export const ChatInterface: React.FC = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent default since we handle it manually
       handleSend();
     }
   };

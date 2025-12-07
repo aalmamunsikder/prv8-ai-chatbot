@@ -47,18 +47,22 @@ export const HeroVisual: React.FC = () => {
                     className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
                     sizes="300px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
 
-                <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 p-2 rounded-full">
-                    <Plane className="w-4 h-4 text-white" />
+                {/* Top Glass Pill */}
+                <div className="absolute top-4 left-4 right-4 glass-card p-4 rounded-2xl border border-white/10 shadow-lg backdrop-blur-xl bg-black/20">
+                    <div className="flex items-start justify-between mb-2">
+                        <span className="inline-block px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+                            Confirmed
+                        </span>
+                        <Plane className="w-3 h-3 text-white/40" />
+                    </div>
+                    <h3 className="text-lg font-serif text-white mb-0.5">G650ER to Monaco</h3>
+                    <p className="text-white/60 text-[10px] uppercase tracking-wide">Departing 09:00 AM • Teterboro</p>
                 </div>
 
-                <div className="absolute bottom-6 left-6 right-6">
-                    <span className="inline-block px-2 py-1 rounded bg-primary/20 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-wider mb-2">
-                        Confirmed
-                    </span>
-                    <h3 className="text-xl font-serif text-white mb-1">G650ER to Monaco</h3>
-                    <p className="text-white/60 text-xs">Departing 09:00 AM • Teterboro</p>
+                <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 p-2 rounded-full">
+                    <Star className="w-4 h-4 text-primary" />
                 </div>
             </motion.div>
 

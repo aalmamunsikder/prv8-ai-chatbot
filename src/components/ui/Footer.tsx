@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Instagram, Twitter, Linkedin, Send, ArrowUp } from 'lucide-react';
 import { NAV_ITEMS } from '@/constants';
+import { Logo } from '@/components/ui/Logo';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -22,8 +23,8 @@ export const Footer: React.FC = () => {
           <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
 
           {/* Large Watermark */}
-          <div className="absolute -bottom-20 -right-20 text-[15rem] font-serif text-white/[0.02] leading-none select-none pointer-events-none">
-            LUMINA
+          <div className="absolute -bottom-20 -right-20 text-[15rem] leading-none select-none pointer-events-none opacity-[0.02]">
+            <Logo variant="full" className="text-[inherit]" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
@@ -31,7 +32,7 @@ export const Footer: React.FC = () => {
             {/* Brand & Newsletter */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full">
               <div>
-                <span className="font-serif text-5xl text-primary tracking-tighter block mb-6">LUMINA</span>
+                <Logo className="text-5xl tracking-tighter block mb-6" />
                 <p className="text-white/50 max-w-sm font-light leading-relaxed text-sm mb-12">
                   Orchestrating the impossible. A symbiotic blend of neural-network precision and human concierge mastery for the modern elite.
                 </p>

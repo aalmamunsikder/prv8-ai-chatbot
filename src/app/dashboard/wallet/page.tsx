@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { CreditCard, ArrowUpRight, Plus, Download } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Logo } from '@/components/ui/Logo';
 
 export default function WalletPage() {
     // 3D Tilt Logic
@@ -83,7 +84,7 @@ export default function WalletPage() {
                                 className="absolute inset-0 p-8 flex flex-col justify-between z-10"
                             >
                                 <div className="flex justify-between items-start">
-                                    <span className="font-serif text-2xl text-white/90 tracking-widest drop-shadow-lg">LUMINA</span>
+                                    <Logo className="text-2xl text-white/90 tracking-widest drop-shadow-lg" />
                                     <span className="px-3 py-1 rounded border border-white/20 text-[10px] text-white/60 uppercase tracking-widest backdrop-blur-md">Noir Edition</span>
                                 </div>
 

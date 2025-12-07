@@ -13,7 +13,7 @@ export const CalendarWidget: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-7 gap-1 text-center text-[10px] text-white/40 mb-2">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d}>{d}</div>)}
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => <div key={`${d}-${i}`}>{d}</div>)}
             </div>
 
             <div className="grid grid-cols-7 gap-1 flex-1">

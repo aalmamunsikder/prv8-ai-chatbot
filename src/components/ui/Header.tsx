@@ -5,6 +5,7 @@ import { Menu, X, User } from 'lucide-react';
 import { NAV_ITEMS } from '@/constants';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,9 +39,7 @@ export const Header: React.FC = () => {
 
           {/* Logo */}
           <Link href="/" className="relative group shrink-0 z-50">
-            <span className="font-serif text-xl tracking-[0.2em] text-primary font-medium group-hover:text-white transition-colors duration-500 whitespace-nowrap">
-              LUMINA
-            </span>
+            <Logo className="text-xl tracking-[0.2em] font-medium group-hover:text-white transition-colors duration-500" />
           </Link>
 
           {/* Desktop Nav */}

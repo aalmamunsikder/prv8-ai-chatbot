@@ -25,11 +25,17 @@ export const useTextToSpeech = () => {
 
         const utterance = new SpeechSynthesisUtterance(text);
 
-        // Attempt to select a "premium" sounding voice (usually Google or Microsoft voices are better)
-        // Prefer "Samantha" on Mac or "Microsoft Zira" on Windows, or just the first English voice.
+        // Attempt to select a "premium" sounding voice
+        // Prioritize "Natural" (Edge), "Google US English" (Chrome), or "Samantha" (Safari)
         const preferredVoice = voices.find(v =>
-            (v.name.includes('Samantha') || v.name.includes('Neural') || v.name.includes('Google US English')) && v.lang.startsWith('en')
-        ) || voices.find(v => v.lang.startsWith('en'));
+            v.name.includes("Natural") && v.lang.startsWith("en-US")
+        ) || voices.find(v =>
+            v.name.includes("Google US English")
+        ) || voices.find(v =>
+            v.name.includes("Samantha")
+        ) || voices.find(v =>
+            v.lang.startsWith("en-US")
+        );
 
         if (preferredVoice) {
             utterance.voice = preferredVoice;
@@ -45,7 +51,12 @@ export const useTextToSpeech = () => {
             if (onEnd) onEnd();
         };
         utterance.onerror = (e) => {
-            console.error("TTS Error:", e);
+            // Ignore common interrupted/canceled errors
+            if (e.error === 'canceled' || e.error === 'interrupted') {
+                setIsSpeaking(false);
+                return;
+            }
+            console.warn("TTS Error (ignoring):", e);
             setIsSpeaking(false);
         };
 

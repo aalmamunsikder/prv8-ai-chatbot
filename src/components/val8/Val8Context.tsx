@@ -80,6 +80,10 @@ interface Val8ContextType {
   activeAction: string | null;
   handleWidgetAction: (action: string) => void;
   clearActiveAction: () => void;
+  isDemoMode: boolean;
+  setIsDemoMode: (mode: boolean) => void;
+  demoStep: number;
+  setDemoStep: (step: number) => void;
 }
 
 const Val8Context = createContext<Val8ContextType | undefined>(undefined);
@@ -96,6 +100,10 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [bookingState, setBookingState] = useState<'idle' | 'summary' | 'checkout' | 'confirmed' | 'post-booking'>('idle');
   const [selectedHotel, setSelectedHotel] = useState<HotelCard | null>(null);
   const [showExitModal, setShowExitModal] = useState(false);
+
+  // Demo Mode State
+  const [isDemoMode, setIsDemoMode] = useState(false);
+  const [demoStep, setDemoStep] = useState(0);
 
   // Map AuthContext user to Val8 UserProfile
   const user: UserProfile | null = authUser ? {
@@ -178,7 +186,11 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setShowLoginModal,
         activeAction,
         handleWidgetAction,
-        clearActiveAction
+        clearActiveAction,
+        isDemoMode,
+        setIsDemoMode,
+        demoStep,
+        setDemoStep
       }}
     >
       {children}

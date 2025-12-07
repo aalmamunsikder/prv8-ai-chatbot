@@ -10,6 +10,7 @@ import { PostBookingSummary } from './PostBookingSummary';
 import { ExitModal } from './ExitModal';
 import { LoginModal } from './LoginModal';
 import { Dashboard } from './Dashboard';
+import { DemoCard } from './DemoCard';
 
 const Val8WidgetContent: React.FC = () => {
     const {
@@ -24,7 +25,10 @@ const Val8WidgetContent: React.FC = () => {
         setShowLoginModal,
         activeAction,
         clearActiveAction,
-        addMessage
+        addMessage,
+        isDemoMode,
+        setIsDemoMode,
+        setDemoStep
     } = useVal8();
     const [showLoader, setShowLoader] = useState(false);
 
@@ -52,7 +56,7 @@ const Val8WidgetContent: React.FC = () => {
     const handleExpand = () => {
         setIsExpanded(true);
         setShowLoader(true);
-        // Simulate loading delay (Frame 2)
+        // Simulate loading delay
         setTimeout(() => {
             setShowLoader(false);
         }, 2000);
@@ -82,7 +86,7 @@ const Val8WidgetContent: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed glass-card rounded-[32px] shadow-2xl overflow-hidden flex flex-col relative z-50"
+                        className="fixed bg-[#050505]/85 backdrop-blur-3xl border border-white/10 rounded-[32px] shadow-2xl overflow-hidden flex flex-col relative z-50"
                         style={{
                             position: 'fixed',
                             ...(view === 'dashboard' ? {
@@ -107,15 +111,31 @@ const Val8WidgetContent: React.FC = () => {
                         {/* Header */}
                         <div className="h-16 bg-white/5 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 shrink-0 relative z-20">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDemoMode ? 'bg-[#C5A572]' : 'bg-primary'}`}>
                                     <span className="font-serif font-bold text-surface text-lg">V</span>
                                 </div>
                                 <div>
-                                    <h1 className="text-white font-serif text-lg tracking-wide">Val8</h1>
-                                    <p className="text-[10px] text-primary uppercase tracking-widest font-medium">Concierge</p>
+                                    <h1 className="text-white font-serif text-lg tracking-wide">{isDemoMode ? 'Visit Dubai AI' : 'Val8'}</h1>
+                                    <p className={`text-[10px] uppercase tracking-widest font-medium ${isDemoMode ? 'text-[#C5A572]' : 'text-primary'}`}>
+                                        {isDemoMode ? 'Official Concierge' : 'Concierge'}
+                                    </p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => {
+                                        const newMode = !isDemoMode;
+                                        setIsDemoMode(newMode);
+                                        if (newMode) {
+                                            setView('dashboard');
+                                            setDemoStep(0);
+                                            // Optional: You might want to clear chat history here too if exposed in context
+                                        }
+                                    }}
+                                    className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-widest font-medium transition-colors border ${isDemoMode ? 'bg-[#C5A572] text-black border-[#C5A572]' : 'bg-white/5 text-white/40 border-white/10 hover:text-white'}`}
+                                >
+                                    {isDemoMode ? 'Exit Demo' : 'Demo'}
+                                </button>
                                 <button
                                     onClick={handleProfileClick}
                                     className="w-8 h-8 rounded-full bg-surface-100 flex items-center justify-center text-white/40 hover:text-white hover:bg-surface-200 transition-colors"
@@ -145,6 +165,18 @@ const Val8WidgetContent: React.FC = () => {
 
                         {/* Main Content Area */}
                         <div className="flex-1 relative overflow-hidden">
+                            {/* DEMO MODE BACKGROUND */}
+                            {isDemoMode && (
+                                <div className="absolute inset-0 z-0 pointer-events-none">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1512453979798-5ea904ac22de?q=80&w=2670&auto=format&fit=crop"
+                                        alt="Dubai Background"
+                                        className="w-full h-full object-cover opacity-20 transform scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+                                </div>
+                            )}
+
                             <AnimatePresence mode="wait">
                                 {showLoader ? (
                                     <motion.div
@@ -162,7 +194,7 @@ const Val8WidgetContent: React.FC = () => {
                                         <p className="text-xs text-white/40 font-light tracking-wide">Connecting to global concierge network</p>
                                     </motion.div>
                                 ) : view === 'dashboard' ? (
-                                    <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex">
+                                    <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex relative z-10">
                                         {/* Left Panel: Chat Interface */}
                                         <div className="w-[400px] border-r border-white/10 flex flex-col bg-white/5 backdrop-blur-xl relative z-10">
                                             <ChatInterface />
@@ -170,13 +202,13 @@ const Val8WidgetContent: React.FC = () => {
                                             <PostBookingSummary />
                                         </div>
 
-                                        {/* Right Panel: Dashboard */}
+                                        {/* Right Panel: Content (Dashboard OR Demo Card) */}
                                         <div className="flex-1 bg-black/20 relative z-0">
-                                            <Dashboard />
+                                            {isDemoMode ? <DemoCard /> : <Dashboard />}
                                         </div>
                                     </motion.div>
                                 ) : (
-                                    <motion.div key="chat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full">
+                                    <motion.div key="chat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full relative z-10">
                                         <ChatInterface />
                                         <BookingFlow />
                                         <PostBookingSummary />

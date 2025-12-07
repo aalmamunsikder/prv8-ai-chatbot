@@ -15,6 +15,7 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { Logo } from '@/components/ui/Logo';
 
 const NAV_ITEMS = [
     { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
@@ -37,9 +38,9 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
             `}
         >
             {/* Logo */}
-            <div className="h-20 flex items-center justify-center border-b border-white/5">
-                <Link href="/" className="font-serif text-2xl text-primary tracking-widest">
-                    {isCollapsed ? 'L' : 'LUMINA'}
+            <div className={`h-20 flex items-center border-b border-white/5 transition-all duration-300 ${isCollapsed ? 'justify-center' : 'justify-start px-6'}`}>
+                <Link href="/">
+                    <Logo variant={isCollapsed ? 'icon' : 'full'} />
                 </Link>
             </div>
 
