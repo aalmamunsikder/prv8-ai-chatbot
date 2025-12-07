@@ -95,9 +95,9 @@ export const Footer: React.FC = () => {
                 <div className="flex flex-col gap-6">
                   <span className="text-xs font-bold uppercase tracking-widest text-white/30">Legal</span>
                   <div className="flex flex-col gap-4">
-                    <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">Cookie Policy</a>
+                    <Link href="/privacy-policy" className="text-sm text-white/60 hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link href="/terms" className="text-sm text-white/60 hover:text-white transition-colors">Terms of Service</Link>
+                    <Link href="/cookie-policy" className="text-sm text-white/60 hover:text-white transition-colors">Cookie Policy</Link>
                   </div>
                 </div>
               </div>

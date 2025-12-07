@@ -22,11 +22,16 @@ export const CuratedSection: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[500px]">
           {EXPERIENCE_CARDS.map((card, index) => (
-            <ScrollReveal key={card.id} delay={index * 100}>
-              <ExperienceCard data={card} index={index} />
-            </ScrollReveal>
+            <div
+              key={card.id}
+              className={`${index === 0 || index === 3 ? 'lg:col-span-2' : ''}`}
+            >
+              <ScrollReveal delay={index * 100} className="h-full">
+                <ExperienceCard data={card} index={index} />
+              </ScrollReveal>
+            </div>
           ))}
         </div>
 

@@ -20,7 +20,14 @@ export const HeroVisual: React.FC = () => {
                 className="absolute w-72 h-96 glass-heavy rounded-3xl border border-white/10 overflow-hidden z-10"
                 style={{ transformOrigin: 'bottom right' }}
             >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
+                <Image
+                    src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop"
+                    alt="Luxury Pattern"
+                    fill
+                    className="object-cover"
+                    sizes="300px"
+                />
+
                 <div className="absolute bottom-6 left-6">
                     <div className="flex items-center gap-2 mb-2">
                         <div className="w-2 h-2 rounded-full bg-primary" />
@@ -44,10 +51,9 @@ export const HeroVisual: React.FC = () => {
                     src="https://images.unsplash.com/photo-1569629743817-70d8db6c323b?q=80&w=1000&auto=format&fit=crop"
                     alt="Luxury Travel"
                     fill
-                    className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
                     sizes="300px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
 
                 {/* Top Glass Pill */}
                 <div className="absolute top-4 left-4 right-4 glass-card p-4 rounded-2xl border border-white/10 shadow-lg backdrop-blur-xl bg-black/20">

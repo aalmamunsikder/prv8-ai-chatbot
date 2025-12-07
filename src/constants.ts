@@ -36,7 +36,7 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'The Arctic Horizon',
     subtitle: 'Expedition',
     description: 'A private glass-igloo retreat under the Northern Lights, complete with personal chef and guided glacier tours.',
-    image: 'https://picsum.photos/id/1036/800/600',
+    image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070&auto=format&fit=crop', // Northern Lights
     tags: [{ label: 'Nature' }, { label: 'Private' }, { label: 'Adventure' }],
     ctaText: 'View Itinerary'
   },
@@ -45,7 +45,7 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'Kyoto Sanctuary',
     subtitle: 'Wellness',
     description: 'Exclusive access to a centuries-old Ryokan normally closed to the public, featuring private onsen and Zen gardens.',
-    image: 'https://picsum.photos/id/1028/800/600',
+    image: 'https://images.unsplash.com/photo-1624253321171-1be53e12f5f4?q=80&w=1974&auto=format&fit=crop', // Zen Garden/Ryokan feel
     tags: [{ label: 'Culture' }, { label: 'Wellness' }, { label: 'Exclusive' }],
     ctaText: 'Request Access'
   },
@@ -54,7 +54,7 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'Monaco Grand Prix',
     subtitle: 'Event',
     description: 'Paddock Club access with a meet-and-greet opportunity with top drivers and a private yacht after-party.',
-    image: 'https://picsum.photos/id/1076/800/600',
+    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop', // Formula 1 / Monaco feel
     tags: [{ label: 'Sports' }, { label: 'VIP' }, { label: 'Lifestyle' }],
     ctaText: 'Reserve Spot'
   },
@@ -63,7 +63,7 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'Galactic Viewing',
     subtitle: 'Space',
     description: 'Priority access to the next commercial launch viewing from a restricted VIP observation deck with astronaut meet-and-greet.',
-    image: 'https://picsum.photos/id/1039/800/600',
+    image: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2072&auto=format&fit=crop', // Space/Earth
     tags: [{ label: 'Future' }, { label: 'Space' }, { label: 'Once-in-a-lifetime' }],
     ctaText: 'Join Waitlist'
   },
@@ -72,7 +72,7 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'Tuscan Vintage',
     subtitle: 'Culinary',
     description: 'A helicopter tour of restricted vineyards in Tuscany followed by a private tasting of the 1982 vintage with the estate owner.',
-    image: 'https://picsum.photos/id/1056/800/600',
+    image: 'https://images.unsplash.com/photo-1516528387618-afa90b13e000?q=80&w=2070&auto=format&fit=crop', // Tuscany Vineyard
     tags: [{ label: 'Wine' }, { label: 'Italy' }, { label: 'Gastronomy' }],
     ctaText: 'Savor Experience'
   },
@@ -81,9 +81,18 @@ export const EXPERIENCE_CARDS: ExperienceCard[] = [
     title: 'Raja Ampat Dive',
     subtitle: 'Marine',
     description: 'Chartered superyacht expedition to the most biodiverse marine region on Earth, guided by National Geographic photographers.',
-    image: 'https://picsum.photos/id/1015/800/600',
+    image: 'https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=2070&auto=format&fit=crop', // Better Marine Image
     tags: [{ label: 'Ocean' }, { label: 'Photography' }, { label: 'Yacht' }],
     ctaText: 'Chart Course'
+  },
+  {
+    id: '7',
+    title: 'Serengeti Migration',
+    subtitle: 'Safari',
+    description: 'Witness the Great Migration from a private mobile camp that follows the herds, offering front-row seats to natures greatest spectacle.',
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068&auto=format&fit=crop', // Safari
+    tags: [{ label: 'Wildlife' }, { label: 'Africa' }, { label: 'Adventure' }],
+    ctaText: 'Witness Nature'
   }
 ];
 
