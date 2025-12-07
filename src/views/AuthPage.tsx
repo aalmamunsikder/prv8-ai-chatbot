@@ -87,7 +87,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                 </div>
 
                 <div className="text-white/20 text-xs font-light tracking-widest uppercase">
-                    © 2024 Lumina Concierge
+                    © 2025 Lumina Concierge
                 </div>
             </div>
 

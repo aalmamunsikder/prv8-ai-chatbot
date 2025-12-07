@@ -11,7 +11,7 @@ interface User {
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
-    login: (email: string, name?: string) => void;
+    login: (email: string, name?: string, role?: 'user' | 'admin') => void;
     logout: () => void;
     isLoading: boolean;
 }
@@ -36,13 +36,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsLoading(false);
     }, []);
 
-    const login = (email: string, name: string = 'Lumina Member') => {
+    const login = (email: string, name: string = 'Lumina Member', role: 'user' | 'admin' = 'user') => {
         // In a real app, this would be an API call
         const newUser: User = {
             id: Math.random().toString(36).substr(2, 9),
             name,
             email,
-            role: 'user'
+            role
         };
 
         setUser(newUser);
