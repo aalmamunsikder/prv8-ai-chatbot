@@ -32,7 +32,7 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
     return (
         <aside
             className={`
-                relative h-screen flex flex-col border-r border-white/5 bg-bg transition-all duration-300 ease-in-out
+                relative h-screen flex flex-col border-r border-white/5 glass-panel transition-all duration-300 ease-in-out
                 ${isCollapsed ? 'w-20' : 'w-64'}
             `}
         >

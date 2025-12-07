@@ -8,15 +8,15 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
     return (
-        <div className="min-h-screen bg-bg flex">
+        <div className="h-screen bg-bg flex overflow-hidden">
             <Sidebar
                 isCollapsed={isSidebarCollapsed}
                 toggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             />
 
-            <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
+            <div className="flex-1 flex flex-col min-w-0 transition-all duration-300 h-full">
                 <DashboardHeader />
-                <main className="flex-1 overflow-x-hidden overflow-y-auto p-6 md:p-8 relative">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto p-6 md:p-8 relative scrollbar-hide">
                     {/* Ambient Glow for Content Area */}
                     <div className="absolute top-0 left-0 w-full h-[500px] bg-primary/5 blur-[120px] pointer-events-none -z-10" />
                     {children}

@@ -8,7 +8,7 @@ export const DashboardHeader: React.FC = () => {
     const { user } = useAuth();
 
     return (
-        <header className="h-20 px-8 border-b border-white/5 flex items-center justify-between bg-bg/50 backdrop-blur-md sticky top-0 z-40">
+        <header className="h-20 px-8 border-b border-white/5 flex items-center justify-between glass-panel sticky top-0 z-40">
             {/* Search */}
             <div className="relative w-96 hidden md:block">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
