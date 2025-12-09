@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Plane, ArrowRight } from 'lucide-react';
 
-export const FlightWidget: React.FC = () => {
+export const FlightWidget: React.FC<{ status?: 'pending' | 'completed' }> = ({ status = 'completed' }) => {
     return (
         <div className="h-full p-6 flex flex-col relative overflow-hidden">
             {/* Background Image with Overlay */}
@@ -22,8 +22,11 @@ export const FlightWidget: React.FC = () => {
                     <div>
                         <h3 className="text-white font-medium text-sm opacity-80">Flight Agent</h3>
                     </div>
-                    <div className="px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-widest border border-emerald-500/20">
-                        Completed
+                    <div className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${status === 'pending'
+                            ? 'bg-amber-500/20 text-amber-400 border-amber-500/20'
+                            : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20'
+                        }`}>
+                        {status}
                     </div>
                 </div>
 

@@ -59,7 +59,7 @@ const MODERN_HOTELS: HotelCard[] = [
 ];
 
 export const ChatInterface: React.FC = () => {
-  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState, isDemoMode, demoStep, setDemoStep, isExpanded } = useVal8();
+  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState, isDemoMode, demoStep, setDemoStep, isExpanded, setDemoPhase } = useVal8();
   const { speak, stop } = useTextToSpeech();
   const [inputValue, setInputValue] = useState('');
   const [cards, setCards] = useState<HotelCard[]>(INITIAL_HOTELS);
@@ -112,13 +112,15 @@ export const ChatInterface: React.FC = () => {
     },
     {
       userText: "Yes, add it.",
-      aiResponse: "Done. Your Dubai itinerary is fully organized. I'll notify you of any updates."
+      aiResponse: "Done. Your Dubai itinerary is fully organized. I'll notify you of any updates.",
+      nextStep: 8
     }
   ];
 
   const runDemoStep = async () => {
     if (demoStep >= DEMO_SCRIPT.length) return;
 
+    setDemoPhase('typing'); // PHASE: TYPING
     const step = DEMO_SCRIPT[demoStep];
 
     // Simulate typing
@@ -138,9 +140,11 @@ export const ChatInterface: React.FC = () => {
       text: step.userText,
       type: 'text'
     });
+    setDemoPhase('processing'); // PHASE: PROCESSING (Card should appear now)
 
     // AI Response (with slight delay for "thinking")
     setTimeout(() => {
+      setDemoPhase('responding'); // PHASE: RESPONDING
       addMessage({
         sender: 'val8',
         text: step.aiResponse,
@@ -151,6 +155,7 @@ export const ChatInterface: React.FC = () => {
       speak(step.aiResponse, () => {
         // Small pause after speaking before next step triggers to simulate human reaction time
         setTimeout(() => {
+          setDemoPhase('idle'); // PHASE: IDLE
           if (step.nextStep !== undefined) {
             setDemoStep(step.nextStep);
           }

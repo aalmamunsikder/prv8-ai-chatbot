@@ -13,13 +13,13 @@ import { ActivityWidget } from '@/components/dashboard/ActivityWidget';
 import { CalendarWidget } from '@/components/dashboard/CalendarWidget';
 
 // --- Widget Wrapper for Animation ---
-const WidgetContainer = ({ children }: { children: React.ReactNode }) => (
+const WidgetContainer = ({ children, className }: { children: React.ReactNode, className?: string }) => (
     <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-md mx-auto"
+        className={className}
     >
         {children}
     </motion.div>
@@ -33,6 +33,9 @@ export default function DemoPage() {
     // Auto-start mechanic
     const [hasStarted, setHasStarted] = useState(false);
 
+    // Active widgets state for grid accumulation
+    const [visibleWidgets, setVisibleWidgets] = useState<string[]>([]);
+
     const step = DEMO_SCRIPT[currentStepId];
 
     // Effect to handle system speaking when step changes
@@ -44,6 +47,16 @@ export default function DemoPage() {
             const timeout = setTimeout(() => {
                 speak(step.text, () => {
                     // On finished speaking
+
+                    // 1. Reveal Widget (if any)
+                    if (step.triggerWidget && step.triggerWidget !== 'none') {
+                        setVisibleWidgets((prev) => {
+                            if (prev.includes(step.triggerWidget!)) return prev;
+                            return [...prev, step.triggerWidget!];
+                        });
+                    }
+
+                    // 2. Auto-advance (if needed)
                     if (step.autoAdvance && step.nextStepId) {
                         setCurrentStepId(step.nextStepId);
                     }
@@ -68,35 +81,41 @@ export default function DemoPage() {
         setHasStarted(false);
         setCurrentStepId('start');
         setHistory([]);
+        setVisibleWidgets([]);
     };
 
     // --- Render Logic for Widgets ---
-    const renderWidget = () => {
-        if (!step) return null;
-
-        switch (step.triggerWidget) {
+    // Returns the grid item for a specific widget ID
+    const renderWidget = (widgetId: string) => {
+        switch (widgetId) {
             case 'flights':
                 return (
-                    <WidgetContainer>
-                        <FlightWidget />
+                    <WidgetContainer key="flights" className="md:col-span-8 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
+                            <FlightWidget />
+                        </div>
                     </WidgetContainer>
                 );
             case 'hotel':
                 return (
-                    <WidgetContainer>
-                        <StayWidget />
+                    <WidgetContainer key="hotel" className="md:col-span-4 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
+                            <StayWidget />
+                        </div>
                     </WidgetContainer>
                 );
             case 'ride':
                 return (
-                    <WidgetContainer>
-                        <RideWidget />
+                    <WidgetContainer key="ride" className="md:col-span-4 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
+                            <RideWidget />
+                        </div>
                     </WidgetContainer>
                 );
             case 'dining':
                 return (
-                    <WidgetContainer>
-                        <div className="glass-card rounded-3xl overflow-hidden">
+                    <WidgetContainer key="dining" className="md:col-span-4 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
                             <ActivityWidget
                                 title="Waterfront Kitchen"
                                 subtitle="$30-50 | American"
@@ -108,8 +127,8 @@ export default function DemoPage() {
                 );
             case 'shopping':
                 return (
-                    <WidgetContainer>
-                        <div className="glass-card rounded-3xl overflow-hidden">
+                    <WidgetContainer key="shopping" className="md:col-span-4 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
                             <ActivityWidget
                                 title="SPF 50 Sunscreen"
                                 subtitle="124k ratings"
@@ -122,8 +141,8 @@ export default function DemoPage() {
                 );
             case 'experiences':
                 return (
-                    <WidgetContainer>
-                        <div className="glass-card rounded-3xl overflow-hidden">
+                    <WidgetContainer key="experiences" className="md:col-span-8 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
                             <ActivityWidget
                                 title="Sunrise Paddle Boarding"
                                 subtitle="Guided Tour"
@@ -135,21 +154,11 @@ export default function DemoPage() {
                 );
             case 'itinerary':
             case 'summary':
+                // Check if we already rendered one of them to avoid duplicates if logic allows both
                 return (
-                    <WidgetContainer>
-                        <div className="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary">✓</div>
-                                <h3 className="text-xl text-white font-serif">Trip Confirmed</h3>
-                            </div>
-                            <div className="space-y-2 text-sm text-white/60">
-                                <p>• AA Flight 294 (SFO → MIA)</p>
-                                <p>• The Setai, Ocean View Suite</p>
-                                <p>• Black SUV Pickup</p>
-                                <p>• Dinner @ Waterfront Kitchen</p>
-                                <p>• Sunsport SPF 50 Ordered</p>
-                                <p>• Paddleboarding Added</p>
-                            </div>
+                    <WidgetContainer key="summary" className="md:col-span-4 h-full">
+                        <div className="glass-card rounded-3xl overflow-hidden h-full">
+                            <CalendarWidget />
                         </div>
                     </WidgetContainer>
                 );
@@ -159,60 +168,59 @@ export default function DemoPage() {
     };
 
     return (
-        <div className="min-h-screen bg-bg relative overflow-hidden flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen bg-bg relative overflow-x-hidden flex flex-col items-center justify-start p-6">
 
             {/* Ambient Background */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute inset-0 pointer-events-none fixed">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
             </div>
 
             {/* Header / Exit */}
-            <div className="absolute top-6 left-6 z-50">
+            <div className="absolute top-6 left-6 z-50 fixed">
                 <Link href="/dashboard" className="text-white/40 hover:text-white text-xs uppercase tracking-widest flex items-center gap-2">
                     <ArrowRight className="w-3 h-3 rotate-180" /> Exit Demo
                 </Link>
             </div>
 
             {/* Main Content Area */}
-            <div className="relative z-10 w-full max-w-4xl flex flex-col items-center gap-12">
+            <div className="relative z-10 w-full max-w-7xl flex flex-col items-center gap-8 pt-12 pb-24">
 
                 {/* 1. VISUALIZER (The "Voice") */}
-                <div className="relative">
-                    <motion.div
-                        animate={{
-                            scale: hasStarted && isSpeaking ? [1, 1.2, 1] : 1,
-                            opacity: hasStarted && isSpeaking ? 0.8 : 0.3
-                        }}
-                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                        className="w-32 h-32 rounded-full bg-primary/20 blur-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    />
-                    <div className="w-24 h-24 rounded-full border border-primary/30 flex items-center justify-center bg-black/40 backdrop-blur-md relative z-10">
-                        {hasStarted ? (
-                            <div className="flex gap-1 items-center h-8">
+                <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
+                    {hasStarted && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="bg-black/40 backdrop-blur-md rounded-full px-6 py-2 border border-white/10 flex items-center gap-3"
+                        >
+                            <div className="flex gap-1 items-center h-4">
                                 {[1, 2, 3, 4, 3, 2, 1].map((i) => (
                                     <motion.div
                                         key={i}
-                                        animate={{ height: isSpeaking ? [10, 25, 10] : 4 }}
+                                        animate={{ height: isSpeaking ? [4, 12, 4] : 4 }}
                                         transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
-                                        className="w-1 bg-primary rounded-full"
+                                        className="w-0.5 bg-primary rounded-full"
                                     />
                                 ))}
                             </div>
-                        ) : (
-                            <Play className="w-8 h-8 text-primary ml-1" />
-                        )}
-                    </div>
+                            <span className="text-white/60 text-xs font-mono uppercase">Lumine AI Recording</span>
+                        </motion.div>
+                    )}
                 </div>
 
-                {/* 2. DYNAMIC WIDGET STAGE */}
-                <div className="h-[400px] w-full flex items-center justify-center">
-                    <AnimatePresence mode="wait">
-                        {renderWidget()}
-                    </AnimatePresence>
-                </div>
 
-                {/* 3. CAPTION & CONTROLS */}
-                <div className="w-full max-w-xl text-center space-y-8">
+                {/* 2. CAPTION AREA (Centered Top) */}
+                <div className="w-full max-w-2xl text-center space-y-8 min-h-[160px] flex flex-col justify-center">
+
+                    {/* Visualizer Circle (Only for Start) */}
+                    {!hasStarted && (
+                        <div className="mx-auto relative mb-8">
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-2xl rounded-full" />
+                            <div className="w-24 h-24 rounded-full border border-primary/30 flex items-center justify-center bg-black/40 backdrop-blur-md relative z-10 mx-auto">
+                                <Play className="w-8 h-8 text-primary ml-1" />
+                            </div>
+                        </div>
+                    )}
 
                     {/* Caption */}
                     <AnimatePresence mode="wait">
@@ -222,7 +230,7 @@ export default function DemoPage() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="text-xl md:text-2xl font-serif text-white/90 leading-relaxed min-h-[5rem]"
+                                className="text-2xl md:text-3xl font-serif text-white/90 leading-relaxed"
                             >
                                 "{step?.text}"
                             </motion.p>
@@ -234,7 +242,7 @@ export default function DemoPage() {
                     {!hasStarted ? (
                         <button
                             onClick={startDemo}
-                            className="bg-primary text-surface px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-colors"
+                            className="bg-primary text-surface px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-colors mx-auto"
                         >
                             Start Demo
                         </button>
@@ -244,12 +252,10 @@ export default function DemoPage() {
                                 <button
                                     key={opt.label}
                                     onClick={() => handleOptionClick(opt.nextStepId)}
-                                    // Disable while speaking to prevent accidental skips? Maybe better to allow interrupt.
-                                    // disabled={isSpeaking} 
                                     className={`
                                         px-6 py-2 rounded-full border transition-all duration-300
                                         ${isSpeaking
-                                            ? 'border-white/10 text-white/20 cursor-not-allowed'
+                                            ? 'border-white/10 text-white/20 cursor-not-allowed hidden'
                                             : 'border-primary text-primary hover:bg-primary hover:text-surface'}
                                     `}
                                 >
@@ -258,14 +264,22 @@ export default function DemoPage() {
                             ))}
                         </div>
                     )}
-
-                    {hasStarted && (
-                        <button onClick={resetDemo} className="text-xs text-white/20 hover:text-white/60 flex items-center gap-2 mx-auto mt-8">
-                            <RotateCcw className="w-3 h-3" /> Reset
-                        </button>
-                    )}
-
                 </div>
+
+                {/* 3. DYNAMIC WIDGET GRID */}
+                <div className="w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[180px]">
+                        <AnimatePresence>
+                            {visibleWidgets.map((widgetId) => renderWidget(widgetId))}
+                        </AnimatePresence>
+                    </div>
+                </div>
+
+                {hasStarted && (
+                    <button onClick={resetDemo} className="text-xs text-white/20 hover:text-white/60 flex items-center gap-2 mt-8">
+                        <RotateCcw className="w-3 h-3" /> Reset
+                    </button>
+                )}
 
             </div>
         </div>

@@ -84,6 +84,8 @@ interface Val8ContextType {
   setIsDemoMode: (mode: boolean) => void;
   demoStep: number;
   setDemoStep: (step: number) => void;
+  demoPhase: 'idle' | 'typing' | 'processing' | 'responding';
+  setDemoPhase: (phase: 'idle' | 'typing' | 'processing' | 'responding') => void;
 }
 
 const Val8Context = createContext<Val8ContextType | undefined>(undefined);
@@ -104,6 +106,7 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Demo Mode State
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [demoStep, setDemoStep] = useState(0);
+  const [demoPhase, setDemoPhase] = useState<'idle' | 'typing' | 'processing' | 'responding'>('idle');
 
   // Map AuthContext user to Val8 UserProfile
   const user: UserProfile | null = authUser ? {
@@ -190,7 +193,9 @@ export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isDemoMode,
         setIsDemoMode,
         demoStep,
-        setDemoStep
+        setDemoStep,
+        demoPhase,
+        setDemoPhase
       }}
     >
       {children}

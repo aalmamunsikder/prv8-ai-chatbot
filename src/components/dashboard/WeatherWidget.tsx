@@ -1,7 +1,7 @@
 import React from 'react';
 import { CloudSun } from 'lucide-react';
 
-export const WeatherWidget: React.FC = () => {
+export const WeatherWidget: React.FC<{ temperature?: string }> = ({ temperature = "84" }) => {
     return (
         <div className="h-full p-5 flex flex-col justify-between relative overflow-hidden group">
             {/* Background Gradient */}
@@ -9,7 +9,7 @@ export const WeatherWidget: React.FC = () => {
 
             <div className="relative z-10 flex justify-between items-start">
                 <div className="flex flex-col">
-                    <h2 className="text-5xl font-light text-white tracking-tighter">84°</h2>
+                    <h2 className="text-5xl font-light text-white tracking-tighter">{temperature}°</h2>
                 </div>
             </div>
 
