@@ -1,7 +1,7 @@
 import React from 'react';
 import { CreditCard, ShieldCheck, Plane, Hotel, Car, Utensils, ShoppingBag, Map } from 'lucide-react';
 
-export const CheckoutWidget: React.FC = () => {
+export const CheckoutWidget: React.FC<{ onCheckout?: () => void }> = ({ onCheckout }) => {
     return (
         <div className="h-full p-4 flex flex-col relative overflow-hidden text-white">
             {/* Header */}
@@ -90,7 +90,10 @@ export const CheckoutWidget: React.FC = () => {
                     </div>
                 </div>
 
-                <button className="w-full group relative overflow-hidden rounded-xl bg-white text-black font-bold py-3 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <button
+                    onClick={onCheckout}
+                    className="w-full group relative overflow-hidden rounded-xl bg-white text-black font-bold py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
                     <div className="flex items-center justify-center gap-2">
                         <ShieldCheck className="w-4 h-4" />

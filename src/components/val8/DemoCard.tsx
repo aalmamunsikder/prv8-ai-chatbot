@@ -35,10 +35,59 @@ export const DemoCard: React.FC = () => {
     // Step 5: Essentials
     // Step 6: Experiences/Summary
 
+    const [isCheckoutComplete, setIsCheckoutComplete] = React.useState(false);
+
+    const handleCheckout = () => {
+        setIsCheckoutComplete(true);
+    };
+
     return (
-        <div className="h-full w-full p-6 overflow-y-auto custom-scrollbar">
+        <div className="h-full w-full p-6 overflow-y-auto custom-scrollbar relative">
+            {/* Success Modal Overlay */}
+            <AnimatePresence>
+                {isCheckoutComplete && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="glass-card rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center relative overflow-hidden"
+                        >
+                            {/* Background decoration */}
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-primary to-emerald-500" />
+                            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl" />
+
+                            <div className="mb-6 flex justify-center">
+                                <div className="p-4 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                                    <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <h3 className="text-2xl font-serif text-white mb-2">Reservation Confirmed</h3>
+                            <p className="text-white/60 text-sm mb-8 leading-relaxed">
+                                Your Dubai itinerary has been successfully booked. A detailed confirmation has been sent to your email.
+                            </p>
+
+                            <button
+                                onClick={() => setIsCheckoutComplete(false)}
+                                className="w-full py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-soft transition-colors"
+                            >
+                                Done
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Dynamic Grid Container - Relaxed Row Height to prevents overlaps */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-max grid-flow-row-dense pb-20">
+            <div className={`grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-max grid-flow-row-dense pb-20 transition-all duration-500 ${isCheckoutComplete ? 'blur-sm grayscale-[0.5]' : ''}`}>
                 <AnimatePresence>
 
                     {/* STEP 1: CONTEXT OVERVIEW - Appear after Date Response (Step 1) */}
@@ -135,7 +184,7 @@ export const DemoCard: React.FC = () => {
                     {demoStep >= 9 && (
                         <WidgetContainer key="checkout" className="md:col-span-12 h-full min-h-[400px]">
                             <div className="glass-card rounded-3xl overflow-hidden h-full">
-                                <CheckoutWidget />
+                                <CheckoutWidget onCheckout={handleCheckout} />
                             </div>
                         </WidgetContainer>
                     )}
