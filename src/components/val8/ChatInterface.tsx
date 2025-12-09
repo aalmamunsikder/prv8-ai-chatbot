@@ -112,7 +112,7 @@ export const ChatInterface: React.FC = () => {
     },
     {
       userText: "Yes, add it.",
-      aiResponse: "Done. Your Dubai itinerary is fully organized. I'll notify you of any updates.",
+      aiResponse: "Done. Your Dubai itinerary is fully organized. Please review the summary below and complete your checkout.",
       nextStep: 8
     }
   ];
@@ -173,7 +173,8 @@ export const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [chatHistory]);
 
-  // Auto-run demo steps
+  // Auto-run demo steps (DISABLED for Manual Mode)
+  /*
   useEffect(() => {
     if (isDemoMode && demoStep < DEMO_SCRIPT.length) {
       // Voice callback handles the "wait for speech", so we just need a tiny functional delay/debounce
@@ -187,10 +188,47 @@ export const ChatInterface: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [isDemoMode, demoStep]);
+  */
 
   const handleSend = () => {
     if (isDemoMode) {
-      runDemoStep();
+      // Manual Mode Logic
+      if (!inputValue.trim()) return;
+
+      const currentStep = DEMO_SCRIPT[demoStep];
+      // Robust matching: normalize both strings by removing non-alphanumeric chars and lowercase
+      const normalize = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+      if (currentStep && normalize(inputValue).includes(normalize(currentStep.userText))) {
+        // Proceed with the demo step manually
+        setDemoPhase('typing'); // Briefly set typing to transition
+        setInputValue('');
+        addMessage({
+          sender: 'user',
+          text: currentStep.userText, // Use script text for consistency
+          type: 'text'
+        });
+        setDemoPhase('processing');
+
+        // Trigger AI Response Sequence
+        setTimeout(() => {
+          setDemoPhase('responding');
+          addMessage({
+            sender: 'val8',
+            text: currentStep.aiResponse,
+            type: 'text'
+          });
+
+          speak(currentStep.aiResponse, () => {
+            setTimeout(() => {
+              setDemoPhase('idle');
+              if (currentStep.nextStep !== undefined) {
+                setDemoStep(currentStep.nextStep);
+              }
+            }, 500);
+          });
+        }, 1000);
+      }
       return;
     }
 
@@ -299,7 +337,7 @@ export const ChatInterface: React.FC = () => {
   // Frame 3: Welcome / Intent Capture
   if (chatHistory.length === 0) {
     return (
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col flex-1">
         <div className="flex-1 flex flex-col justify-center px-8 pb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -334,8 +372,8 @@ export const ChatInterface: React.FC = () => {
           </div>
         </div>
 
-        {/* Input Area (Shared) */}
-        <div className="p-4 bg-white/[0.02] border-t border-white/[0.05]">
+        {/* Input Area (Shared - Unified Style) */}
+        <div className="p-4 glass-card border-x-0 border-b-0 rounded-none rounded-b-3xl">
           <div className="relative">
             <input
               type="text"
@@ -343,11 +381,11 @@ export const ChatInterface: React.FC = () => {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Tell me anything..."
-              className="w-full bg-transparent border-b border-white/10 py-3 pr-10 text-sm text-white placeholder-white/20 focus:outline-none focus:border-primary/50 transition-colors font-light"
+              className="w-full bg-black/20 text-white placeholder-white/30 rounded-xl pl-4 pr-12 py-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary border border-white/5 transition-all"
             />
             <button
               onClick={handleSend}
-              className="absolute right-0 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-surface hover:bg-primary-soft transition-colors"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -359,7 +397,7 @@ export const ChatInterface: React.FC = () => {
 
   // Frame 4+: Chat Interface
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1 h-full">
       <div className="flex-1 p-6 overflow-y-auto no-scrollbar space-y-6">
         {chatHistory.map((msg, i) => (
           <motion.div
@@ -419,7 +457,7 @@ export const ChatInterface: React.FC = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Tell me anything..."
-            className="w-full bg-black/20 text-white placeholder-white/30 rounded-xl pl-4 pr-12 py-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 border border-white/5 transition-all"
+            className="w-full bg-black/20 text-white placeholder-white/30 rounded-xl pl-4 pr-12 py-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary border border-white/5 transition-all"
           />
           <button
             type="submit"

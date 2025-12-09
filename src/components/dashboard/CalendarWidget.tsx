@@ -1,10 +1,14 @@
 import React from 'react';
 
-export const CalendarWidget: React.FC = () => {
+interface CalendarWidgetProps {
+    tripStart?: number;
+    tripEnd?: number;
+}
+
+export const CalendarWidget: React.FC<CalendarWidgetProps> = ({ tripStart = 5, tripEnd = 9 }) => {
     const days = Array.from({ length: 30 }, (_, i) => i + 1);
-    const currentDay = 8;
-    const tripStart = 6;
-    const tripEnd = 9;
+
+
 
     return (
         <div className="h-full p-6 flex flex-col">
@@ -18,17 +22,19 @@ export const CalendarWidget: React.FC = () => {
 
             <div className="grid grid-cols-7 gap-1 flex-1">
                 {days.map(day => {
-                    const isTrip = day >= tripStart && day <= tripEnd;
-                    const isCurrent = day === currentDay;
+                    const isStart = day === tripStart;
+                    const isEnd = day === tripEnd;
+                    const isRange = day > tripStart && day < tripEnd;
+                    const isSelected = isStart || isEnd;
 
                     return (
                         <div
                             key={day}
                             className={`
-                        flex items-center justify-center text-xs rounded-full w-6 h-6 mx-auto
-                        ${isCurrent ? 'bg-white text-surface font-bold' : ''}
-                        ${isTrip && !isCurrent ? 'bg-primary/20 text-primary' : ''}
-                        ${!isTrip && !isCurrent ? 'text-white/60' : ''}
+                        flex items-center justify-center text-xs rounded-full w-6 h-6 mx-auto transition-all
+                        ${isSelected ? 'bg-white text-surface font-bold scale-110 shadow-lg shadow-white/10' : ''}
+                        ${isRange ? 'bg-primary/20 text-primary' : ''}
+                        ${!isSelected && !isRange ? 'text-white/60' : ''}
                     `}
                         >
                             {day}

@@ -5,6 +5,7 @@ import { FlightWidget } from '@/components/dashboard/FlightWidget';
 import { StayWidget } from '@/components/dashboard/StayWidget';
 import { RideWidget } from '@/components/dashboard/RideWidget';
 import { ActivityWidget } from '@/components/dashboard/ActivityWidget';
+import { CheckoutWidget } from '@/components/dashboard/CheckoutWidget';
 import { CalendarWidget } from '@/components/dashboard/CalendarWidget';
 import { WeatherWidget } from '@/components/dashboard/WeatherWidget';
 import { TimezoneWidget } from '@/components/dashboard/TimezoneWidget';
@@ -37,7 +38,7 @@ export const DemoCard: React.FC = () => {
     return (
         <div className="h-full w-full p-6 overflow-y-auto custom-scrollbar">
             {/* Dynamic Grid Container */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[180px] grid-flow-row-dense pb-20">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[180px] grid-flow-row-dense">
                 <AnimatePresence>
 
                     {/* STEP 0: CONTEXT OVERVIEW - Appear after Greeting (Processing/Responding) */}
@@ -126,6 +127,15 @@ export const DemoCard: React.FC = () => {
                                     image="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
                                     category="Experiences"
                                 />
+                            </div>
+                        </WidgetContainer>
+                    )}
+
+                    {/* STEP 8: CHECKOUT - Appear after Final Summary ("Done...") */}
+                    {demoStep >= 8 && (
+                        <WidgetContainer key="checkout" className="md:col-span-12 h-full row-span-2">
+                            <div className="glass-card rounded-3xl overflow-hidden h-full">
+                                <CheckoutWidget />
                             </div>
                         </WidgetContainer>
                     )}

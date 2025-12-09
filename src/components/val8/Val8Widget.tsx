@@ -203,7 +203,7 @@ const Val8WidgetContent: React.FC = () => {
                                         </div>
 
                                         {/* Right Panel: Content (Dashboard OR Demo Card) */}
-                                        <div className="flex-1 bg-black/20 relative z-0">
+                                        <div className="flex-1 bg-black/20 relative z-0 flex flex-col">
                                             {isDemoMode ? <DemoCard /> : <Dashboard />}
                                         </div>
                                     </motion.div>
