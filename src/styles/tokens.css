@@ -24,6 +24,15 @@
     --glass-card-start: rgba(20, 20, 20, 0.6);
     --glass-card-end: rgba(10, 10, 10, 0.4);
 
+    /* Surface Translucent (for Glass) */
+    --color-surface-50: rgba(255, 255, 255, 0.02);
+    --color-surface-100: rgba(255, 255, 255, 0.05);
+    --color-surface-200: rgba(255, 255, 255, 0.08);
+
+    /* Glass Effect Utilities */
+    --shadow-glass-card: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    --highlight-glass-card: rgba(255, 255, 255, 0.1);
+
     /* Typography */
     --font-family-display: "Cormorant Garamond", serif;
     --font-family-body: "Inter", system-ui, sans-serif;
@@ -114,8 +123,17 @@
     /* Glass: Light Frosted Glass Style */
     --glass-heavy: rgba(255, 255, 255, 0.7);
     --glass-atlas: rgba(255, 255, 255, 0.6);
-    --glass-card-start: rgba(255, 255, 255, 0.8);
-    --glass-card-end: rgba(255, 255, 255, 0.4);
+    --glass-card-start: rgba(255, 255, 255, 0.85);
+    --glass-card-end: rgba(255, 255, 255, 0.45);
+
+    /* Surface Translucent (Darker for Light Mode) */
+    --color-surface-50: rgba(0, 0, 0, 0.03);
+    --color-surface-100: rgba(0, 0, 0, 0.06);
+    --color-surface-200: rgba(0, 0, 0, 0.08); /* Visible slightly dark border */
+
+    /* Glass Effect Utilities */
+    --shadow-glass-card: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+    --highlight-glass-card: rgba(255, 255, 255, 0.5);
 
     /* Keep Brand Colors but maybe adjust sheen */
     --color-sheen: color-mix(in srgb, var(--color-primary), transparent 90%);

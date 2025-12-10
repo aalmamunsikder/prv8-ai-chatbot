@@ -120,7 +120,7 @@ const Val8WidgetContent: React.FC = () => {
                                 <div>
                                     <h1 className="text-text-primary dark:text-white font-serif text-lg tracking-wide">{isDemoMode ? 'Visit Dubai AI' : 'Val8'}</h1>
                                     <p className={`text-[10px] uppercase tracking-widest font-medium ${isDemoMode ? 'text-[#C5A572]' : 'text-primary'}`}>
-                                        {isDemoMode ? 'Official Concierge' : 'Powered by PRV8.'}
+                                        {isDemoMode ? 'Powered by Prv8' : 'Powered by PRV8.'}
                                     </p>
                                 </div>
                             </div>

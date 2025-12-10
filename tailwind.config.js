@@ -21,9 +21,9 @@ module.exports = {
                 surface: {
                     DEFAULT: 'var(--color-surface)',
                     alt: 'var(--color-surface-alt)',
-                    50: 'rgba(255, 255, 255, 0.02)',
-                    100: 'rgba(255, 255, 255, 0.05)',
-                    200: 'rgba(255, 255, 255, 0.08)',
+                    50: 'var(--color-surface-50)',
+                    100: 'var(--color-surface-100)',
+                    200: 'var(--color-surface-200)',
                 },
                 obsidian: 'var(--color-bg)',
                 charcoal: 'var(--color-surface)',
