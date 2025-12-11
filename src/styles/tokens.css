@@ -24,6 +24,8 @@
     --glass-card-start: rgba(20, 20, 20, 0.6);
     --glass-card-end: rgba(10, 10, 10, 0.4);
 
+    --glass-border: var(--color-surface-200);
+
     /* Surface Translucent (for Glass) */
     --color-surface-50: rgba(255, 255, 255, 0.02);
     --color-surface-100: rgba(255, 255, 255, 0.05);
@@ -97,45 +99,42 @@
 
 .light {
     /* Backgrounds: Invert to Light */
-    --color-bg: #FAFAFA;
-    /* Soft White */
+    --color-bg: #F0F2F5;
+    /* Darker Cool Gray for Better Contrast */
     --color-surface: #FFFFFF;
-    /* Pure White */
-    --color-surface-alt: #F3F4F6;
-    /* Gray 100 */
+    --color-surface-alt: #F8FAFC;
 
     /* Text: Invert to Dark */
-    --color-text-primary: #1A1A1A;
-    /* Almost Black */
-    --color-text-secondary: #4B5563;
-    /* Gray 600 */
-    --color-text-muted: #9CA3AF;
-    /* Gray 400 */
+    --color-text-primary: #0F172A;
+    --color-text-secondary: #334155;
+    --color-text-muted: #64748B;
     --color-text-on-primary: #FFFFFF;
-    /* White on Gold */
 
-    /* Borders: Darker for visibility on light */
-    --color-border-subtle: #E5E7EB;
-    /* Gray 200 */
+    /* Borders: Crisp */
+    --color-border-subtle: #CBD5E1;
+    /* Stronger border for glass definition */
     --color-border-strong: #D4AF37;
-    /* Primary Gold */
 
-    /* Glass: Light Frosted Glass Style */
-    --glass-heavy: rgba(255, 255, 255, 0.7);
+    /* Glass: Distinct White Glass */
+    --glass-heavy: rgba(255, 255, 255, 0.75);
+    /* More opaque for sidebar */
     --glass-atlas: rgba(255, 255, 255, 0.6);
-    --glass-card-start: rgba(255, 255, 255, 0.85);
-    --glass-card-end: rgba(255, 255, 255, 0.45);
+    --glass-card-start: rgba(255, 255, 255, 0.9);
+    --glass-card-end: rgba(255, 255, 255, 0.5);
 
-    /* Surface Translucent (Darker for Light Mode) */
-    --color-surface-50: rgba(0, 0, 0, 0.03);
-    --color-surface-100: rgba(0, 0, 0, 0.06);
-    --color-surface-200: rgba(0, 0, 0, 0.08); /* Visible slightly dark border */
+    /* Adaptive Glass Border */
+    --glass-border: rgba(0, 0, 0, 0.08);
+
+    /* Surface Translucent */
+    --color-surface-50: rgba(255, 255, 255, 0.5);
+    --color-surface-100: rgba(255, 255, 255, 0.8);
+    --color-surface-200: rgba(255, 255, 255, 0.95);
 
     /* Glass Effect Utilities */
-    --shadow-glass-card: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-    --highlight-glass-card: rgba(255, 255, 255, 0.5);
+    --shadow-glass-card: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+    --highlight-glass-card: rgba(255, 255, 255, 1.0);
 
-    /* Keep Brand Colors but maybe adjust sheen */
+    /* Brand Sheen */
     --color-sheen: color-mix(in srgb, var(--color-primary), transparent 90%);
 }
 

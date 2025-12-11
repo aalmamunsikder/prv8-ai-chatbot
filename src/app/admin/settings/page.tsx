@@ -15,12 +15,12 @@ import {
 import { Button } from '@/components/ui/Button';
 
 const SettingSection = ({ title, icon: Icon, children }: any) => (
-    <div className="glass-panel p-6 rounded-2xl border border-white/[0.05] mb-6">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/[0.05]">
-            <div className="p-2 rounded-lg bg-white/5 text-white/60">
+    <div className="glass-panel p-6 rounded-2xl border border-border-subtle mb-6">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-subtle">
+            <div className="p-2 rounded-lg bg-surface-100 text-text-muted">
                 <Icon className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-light text-white">{title}</h3>
+            <h3 className="text-lg font-light text-text-primary">{title}</h3>
         </div>
         <div className="space-y-6">
             {children}
@@ -31,12 +31,12 @@ const SettingSection = ({ title, icon: Icon, children }: any) => (
 const Toggle = ({ label, description, checked, onChange }: any) => (
     <div className="flex items-center justify-between">
         <div>
-            <p className="text-sm font-medium text-white">{label}</p>
-            <p className="text-xs text-white/40 mt-0.5">{description}</p>
+            <p className="text-sm font-medium text-text-primary">{label}</p>
+            <p className="text-xs text-text-secondary mt-0.5">{description}</p>
         </div>
         <button
             onClick={() => onChange(!checked)}
-            className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${checked ? 'bg-primary' : 'bg-white/10'}`}
+            className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${checked ? 'bg-primary' : 'bg-surface-200'}`}
         >
             <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${checked ? 'left-[calc(100%-1.25rem)]' : 'left-1'}`} />
         </button>
@@ -61,10 +61,10 @@ export default function AdminSettingsPage() {
         <div className="max-w-4xl mx-auto pb-12">
             <header className="flex justify-between items-center mb-8">
                 <div>
-                    <h2 className="text-2xl font-light text-white">System Configuration</h2>
-                    <p className="text-white/40 text-sm mt-1">Global application preferences and security protocols.</p>
+                    <h2 className="text-2xl font-light text-text-primary">System Configuration</h2>
+                    <p className="text-text-muted text-sm mt-1">Global application preferences and security protocols.</p>
                 </div>
-                <Button className="bg-white text-black hover:bg-white/90">
+                <Button className="bg-text-primary text-bg hover:bg-text-primary/90">
                     <Save className="w-4 h-4 mr-2" /> Save Changes
                 </Button>
             </header>
@@ -121,27 +121,27 @@ export default function AdminSettingsPage() {
             <SettingSection title="API Configuration" icon={Database}>
                 <div className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-white/40">Stripe Secret Key</label>
+                        <label className="text-xs uppercase tracking-widest text-text-muted">Stripe Secret Key</label>
                         <div className="flex gap-2">
                             <input
                                 type="password"
                                 value="sk_test_51MzXXXXXXXXXXXXXXXXXXXX"
                                 readOnly
-                                className="flex-1 bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-sm text-white/60 font-mono"
+                                className="flex-1 bg-surface-100 border border-border-subtle rounded-lg px-4 py-2 text-sm text-text-secondary font-mono"
                             />
-                            <button className="px-4 text-xs font-medium text-primary hover:text-white transition-colors">Reveal</button>
+                            <button className="px-4 text-xs font-medium text-primary hover:text-text-primary transition-colors">Reveal</button>
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-white/40">OpenAI API Key</label>
+                        <label className="text-xs uppercase tracking-widest text-text-muted">OpenAI API Key</label>
                         <div className="flex gap-2">
                             <input
                                 type="password"
                                 value="sk-proj-XXXXXXXXXXXXXXXXXXXX"
                                 readOnly
-                                className="flex-1 bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-sm text-white/60 font-mono"
+                                className="flex-1 bg-surface-100 border border-border-subtle rounded-lg px-4 py-2 text-sm text-text-secondary font-mono"
                             />
-                            <button className="px-4 text-xs font-medium text-primary hover:text-white transition-colors">Edit</button>
+                            <button className="px-4 text-xs font-medium text-primary hover:text-text-primary transition-colors">Edit</button>
                         </div>
                     </div>
                 </div>

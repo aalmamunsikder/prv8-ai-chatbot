@@ -28,9 +28,9 @@ export const AdminSidebar = () => {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-white/[0.05] z-50 flex flex-col bg-black/40 backdrop-blur-xl">
+        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-border-subtle z-50 flex flex-col bg-glass-heavy backdrop-blur-xl">
             {/* Header */}
-            <div className="h-20 flex items-center px-8 border-b border-white/[0.05]">
+            <div className="h-20 flex items-center px-8 border-b border-border-subtle">
                 <Logo />
             </div>
 
@@ -43,11 +43,11 @@ export const AdminSidebar = () => {
                             key={item.href}
                             href={item.href}
                             className={`relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 group ${isActive
-                                ? 'bg-primary/10 text-white'
-                                : 'text-white/40 hover:text-white hover:bg-white/5'
+                                ? 'bg-primary/10 text-text-primary'
+                                : 'text-text-muted hover:text-text-primary hover:bg-surface-100'
                                 }`}
                         >
-                            <item.icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'group-hover:text-white transition-colors'}`} />
+                            <item.icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'group-hover:text-text-primary transition-colors'}`} />
                             <span className="text-sm font-light tracking-wide">{item.label}</span>
 
                             {isActive && (
@@ -64,10 +64,10 @@ export const AdminSidebar = () => {
             </nav>
 
             {/* Footer */}
-            <div className="p-4 border-t border-white/[0.05]">
+            <div className="p-4 border-t border-border-subtle">
                 <button
                     onClick={logout}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all duration-300 group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-text-muted hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all duration-300 group"
                 >
                     <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                     <span className="text-sm font-light">End Session</span>

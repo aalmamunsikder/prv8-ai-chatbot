@@ -57,8 +57,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
             </div>
 
             {/* Left Panel - Visual */}
-            <div className="hidden lg:flex w-1/2 flex-col justify-between items-center text-center p-16 relative z-10 border-r border-white/5 bg-white/[0.01]">
-                <Link href="/" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group w-fit">
+            <div className="hidden lg:flex w-1/2 flex-col justify-between items-center text-center p-16 relative z-10 border-r border-border-subtle bg-surface-50">
+                <Link href="/" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors group w-fit">
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     <span className="text-sm font-medium tracking-wide">Back to Sanctuary</span>
                 </Link>
@@ -72,21 +72,21 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                         <span className="h-[1px] w-12 bg-primary"></span>
                     </div>
 
-                    <h1 className="font-serif text-7xl text-white leading-[0.9] mb-8">
+                    <h1 className="font-serif text-7xl text-text-primary leading-[0.9] mb-8">
                         {type === 'login' ? 'Return to' : 'Join the'} <br />
-                        <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary-soft">
+                        <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-text-primary to-primary-soft">
                             Excellence.
                         </span>
                     </h1>
 
-                    <p className="text-white/60 max-w-md font-light leading-relaxed text-lg mx-auto">
+                    <p className="text-text-secondary max-w-md font-light leading-relaxed text-lg mx-auto">
                         {type === 'login'
                             ? 'Access your curated itinerary, personal concierge, and exclusive member benefits.'
                             : 'Step into a world where your desires are anticipated before they are spoken.'}
                     </p>
                 </div>
 
-                <div className="text-white/20 text-xs font-light tracking-widest uppercase">
+                <div className="text-text-muted text-xs font-light tracking-widest uppercase">
                     © 2025 Lumina Concierge
                 </div>
             </div>
@@ -96,27 +96,27 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                 <div className="max-w-[420px] w-full">
 
                     {/* Mobile Back Button */}
-                    <Link href="/" className="lg:hidden flex items-center gap-2 text-white/60 hover:text-white mb-8">
+                    <Link href="/" className="lg:hidden flex items-center gap-2 text-text-secondary hover:text-text-primary mb-8">
                         <ArrowLeft className="w-5 h-5" />
                         Back
                     </Link>
 
                     {/* Standard Glass Card */}
-                    <div className="glass-card p-8 md:p-10 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden">
+                    <div className="glass-card p-8 md:p-10 rounded-3xl border border-border-subtle shadow-2xl relative overflow-hidden">
 
                         {/* Form Header */}
                         <div className="text-center mb-8">
-                            <h2 className="font-serif text-3xl text-white mb-2">
+                            <h2 className="font-serif text-3xl text-text-primary mb-2">
                                 {type === 'login' ? 'Member Access' : 'Apply for Membership'}
                             </h2>
-                            <p className="text-white/40 text-sm">
+                            <p className="text-text-secondary text-sm">
                                 {type === 'login' ? 'Enter your credentials to continue' : 'Begin your journey with us'}
                             </p>
                         </div>
 
                         {/* Social Login with proper SVGs */}
                         <div className="grid grid-cols-2 gap-4 mb-8">
-                            <button className="flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 transition-all text-sm text-white/80 font-medium group">
+                            <button className="flex items-center justify-center gap-3 bg-surface-100 hover:bg-surface-200 border border-border-subtle rounded-xl py-3 transition-all text-sm text-text-primary font-medium group">
                                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -125,8 +125,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                                 </svg>
                                 Google
                             </button>
-                            <button className="flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 transition-all text-sm text-white/80 font-medium group">
-                                <svg className="w-5 h-5 fill-white/80 group-hover:fill-white transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <button className="flex items-center justify-center gap-3 bg-surface-100 hover:bg-surface-200 border border-border-subtle rounded-xl py-3 transition-all text-sm text-text-primary font-medium group">
+                                <svg className="w-5 h-5 fill-text-primary/80 group-hover:fill-text-primary transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74s2.57-.99 3.87-.84c1.61.18 3.47.52 4.02 2.65-.05.02-2.48 1.48-2.42 4.41.05 2.92 2.65 4.19 2.63 4.2-.67 1.95-1.7 3.93-3.18 5.41zm-2.06-14.88c.9.06 1.77-.38 2.24-1.05.7-.93.68-2.6-.08-3.51-.83-.88-2.46-1.1-2.93-.16-.54.91-.4 2.84.77 4.72z" />
                                 </svg>
                                 Apple
@@ -135,10 +135,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
 
                         <div className="relative mb-8">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-white/10"></div>
+                                <div className="w-full border-t border-border-subtle"></div>
                             </div>
                             <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                                <span className="px-4 text-white/20 bg-[#050505]">Or continue with</span>
+                                <span className="px-4 text-text-muted bg-surface">Or continue with</span>
                             </div>
                         </div>
 
@@ -153,14 +153,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             {type === 'register' && (
                                 <div className="space-y-2 group">
-                                    <label className="text-xs font-medium text-white/40 uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Full Name</label>
+                                    <label className="text-xs font-medium text-text-secondary uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Full Name</label>
                                     <div className="relative">
-                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-primary transition-colors" />
+                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-primary transition-colors" />
                                         <input
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all font-light"
+                                            className="w-full bg-surface-100 border border-border-subtle rounded-xl px-12 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:bg-surface-200 transition-all font-light"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -168,28 +168,28 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                             )}
 
                             <div className="space-y-2 group">
-                                <label className="text-xs font-medium text-white/40 uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Email Address</label>
+                                <label className="text-xs font-medium text-text-secondary uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Email Address</label>
                                 <div className="relative">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-primary transition-colors" />
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all font-light"
+                                        className="w-full bg-surface-100 border border-border-subtle rounded-xl px-12 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:bg-surface-200 transition-all font-light"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2 group">
-                                <label className="text-xs font-medium text-white/40 uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Password</label>
+                                <label className="text-xs font-medium text-text-secondary uppercase tracking-widest pl-1 group-focus-within:text-primary transition-colors">Password</label>
                                 <div className="relative">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-primary transition-colors" />
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all font-light"
+                                        className="w-full bg-surface-100 border border-border-subtle rounded-xl px-12 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:bg-surface-200 transition-all font-light"
                                         placeholder="••••••••"
                                     />
                                 </div>
@@ -197,7 +197,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
 
                             <button
                                 disabled={isLoading}
-                                className="w-full bg-primary text-surface font-bold tracking-wide py-4 rounded-xl hover:bg-white hover:text-bg transition-all mt-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_-10px_rgba(212,175,55,0.3)]"
+                                className="w-full bg-primary text-text-on-primary font-bold tracking-wide py-4 rounded-xl hover:bg-text-primary hover:text-bg transition-all mt-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_-10px_rgba(212,175,55,0.3)]"
                             >
                                 {isLoading ? (
                                     <div className="flex items-center gap-2">
@@ -213,12 +213,12 @@ export const AuthPage: React.FC<AuthPageProps> = ({ type }) => {
                         </form>
 
                         {/* Footer Switch */}
-                        <div className="mt-8 pt-6 border-t border-white/5 text-center">
-                            <p className="text-white/40 text-sm">
+                        <div className="mt-8 pt-6 border-t border-border-subtle text-center">
+                            <p className="text-text-secondary text-sm">
                                 {type === 'login' ? "Don't have an account? " : "Already a member? "}
                                 <Link
                                     href={type === 'login' ? '/register' : '/login'}
-                                    className="text-primary hover:text-white transition-colors ml-1 font-medium"
+                                    className="text-primary hover:text-text-primary transition-colors ml-1 font-medium"
                                 >
                                     {type === 'login' ? 'Apply Now' : 'Sign In'}
                                 </Link>

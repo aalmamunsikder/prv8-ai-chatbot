@@ -9,7 +9,7 @@ export const DashboardHeader: React.FC = () => {
     const [activeDropdown, setActiveDropdown] = React.useState<'notifications' | 'profile' | null>(null);
 
     return (
-        <header className="h-20 px-8 border-b border-border-subtle dark:border-white/5 flex items-center justify-between glass-panel sticky top-0 z-40 bg-surface/50 dark:bg-transparent backdrop-blur-md">
+        <header className="h-20 px-8 border-b border-border-subtle dark:border-white/5 flex items-center justify-between glass-heavy sticky top-0 z-40 backdrop-blur-md">
             {/* Search */}
             <div className="relative w-96 hidden md:block">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted dark:text-white/30" />
@@ -27,10 +27,10 @@ export const DashboardHeader: React.FC = () => {
                 <div className="relative">
                     <button
                         onClick={() => setActiveDropdown(activeDropdown === 'notifications' ? null : 'notifications')}
-                        className={`relative text-text-muted dark:text-white/40 hover:text-text-primary dark:hover:text-white transition-colors ${activeDropdown === 'notifications' ? 'text-text-primary dark:text-white' : ''}`}
+                        className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeDropdown === 'notifications' ? 'bg-surface-alt dark:bg-white/10 text-text-primary dark:text-white' : 'text-text-muted dark:text-white/40 hover:bg-surface-alt dark:hover:bg-white/5 hover:text-text-primary dark:hover:text-white'}`}
                     >
                         <Bell className="w-5 h-5" />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+                        <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full animate-pulse border-2 border-surface" />
                     </button>
 
                     {activeDropdown === 'notifications' && (
@@ -76,7 +76,7 @@ export const DashboardHeader: React.FC = () => {
                             <p className="text-sm font-medium text-text-primary dark:text-white group-hover:text-primary transition-colors">{user?.name || 'Member'}</p>
                             <p className="text-[10px] text-text-muted dark:text-white/40 uppercase tracking-wider">Lumina Noir</p>
                         </div>
-                        <div className={`w-10 h-10 rounded-full border flex items-center justify-center text-primary font-serif italic text-lg transition-all ${activeDropdown === 'profile' ? 'bg-primary text-black border-primary' : 'bg-primary/20 border-primary/20 group-hover:bg-primary group-hover:text-black'}`}>
+                        <div className={`w-10 h-10 rounded-full border flex items-center justify-center text-primary font-serif italic text-lg transition-all ${activeDropdown === 'profile' ? 'bg-primary text-black border-primary' : 'bg-primary/10 border-primary/20 group-hover:bg-primary group-hover:text-black'}`}>
                             {user?.name?.[0] || 'M'}
                         </div>
                     </div>

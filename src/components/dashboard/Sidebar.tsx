@@ -33,12 +33,12 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
     return (
         <aside
             className={`
-                relative h-screen flex flex-col border-r border-white/5 glass-panel transition-all duration-300 ease-in-out
+                relative h-screen flex flex-col border-r border-border-subtle dark:border-white/5 bg-glass-heavy transition-all duration-300 ease-in-out backdrop-blur-xl z-50
                 ${isCollapsed ? 'w-20' : 'w-64'}
             `}
         >
             {/* Logo */}
-            <div className={`h-20 flex items-center border-b border-white/5 transition-all duration-300 ${isCollapsed ? 'justify-center' : 'justify-start px-6'}`}>
+            <div className={`h-20 flex items-center border-b border-border-subtle dark:border-white/5 transition-all duration-300 ${isCollapsed ? 'justify-center' : 'justify-start px-6'}`}>
                 <Link href="/">
                     <Logo variant={isCollapsed ? 'icon' : 'full'} />
                 </Link>
@@ -47,7 +47,7 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
             {/* Toggle Button (Absolute on border) */}
             <button
                 onClick={toggleCollapse}
-                className="absolute -right-3 top-24 w-6 h-6 rounded-full bg-surface border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors z-50"
+                className="absolute -right-3 top-24 w-6 h-6 rounded-full bg-surface border border-border-subtle dark:border-white/10 flex items-center justify-center text-text-muted dark:text-white/60 hover:text-text-primary dark:hover:text-white transition-colors z-50"
             >
                 {isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
             </button>
@@ -64,10 +64,10 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
                                 flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 group
                                 ${isActive
                                     ? 'bg-primary/10 text-primary'
-                                    : 'text-white/40 hover:text-white hover:bg-white/5'}
+                                    : 'text-text-muted dark:text-white/40 hover:text-text-primary dark:hover:text-white hover:bg-surface-alt dark:hover:bg-white/5'}
                             `}
                         >
-                            <item.icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-primary' : 'group-hover:text-white'}`} />
+                            <item.icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-primary' : 'group-hover:text-text-primary dark:group-hover:text-white'}`} />
                             <span
                                 className={`
                                     whitespace-nowrap overflow-hidden transition-all duration-300 font-medium text-sm
@@ -79,7 +79,7 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
 
                             {/* Hover Tooltip for Collapsed State */}
                             {isCollapsed && (
-                                <div className="absolute left-full ml-4 px-2 py-1 bg-surface border border-white/10 rounded-md text-xs text-white opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50">
+                                <div className="absolute left-full ml-4 px-2 py-1 bg-surface border border-border-subtle dark:border-white/10 rounded-md text-xs text-text-primary dark:text-white opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50">
                                     {item.label}
                                 </div>
                             )}
@@ -89,11 +89,11 @@ export const Sidebar: React.FC<{ isCollapsed: boolean; toggleCollapse: () => voi
             </nav>
 
             {/* User / Logout */}
-            <div className="p-4 border-t border-white/5">
+            <div className="p-4 border-t border-border-subtle dark:border-white/5">
                 <button
                     onClick={logout}
                     className={`
-                        w-full flex items-center gap-4 px-3 py-3 rounded-xl text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200
+                        w-full flex items-center gap-4 px-3 py-3 rounded-xl text-text-muted dark:text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200
                         ${isCollapsed ? 'justify-center' : ''}
                     `}
                 >

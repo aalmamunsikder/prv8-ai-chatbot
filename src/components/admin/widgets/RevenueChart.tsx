@@ -7,10 +7,10 @@ export const RevenueChart = () => {
     return (
         <div className="p-6 h-full flex flex-col justify-between relative overflow-hidden">
             <div className="relative z-10">
-                <p className="text-xs uppercase tracking-widest text-white/40 mb-1">Monthly Recurring</p>
+                <p className="text-xs uppercase tracking-widest text-text-muted mb-1">Monthly Recurring</p>
                 <div className="flex items-baseline gap-2">
-                    <h3 className="text-3xl font-light text-white">$1.24M</h3>
-                    <span className="text-xs text-green-400 flex items-center gap-1">
+                    <h3 className="text-3xl font-light text-text-primary">$1.24M</h3>
+                    <span className="text-xs text-success flex items-center gap-1">
                         +12.4% <ArrowUpRight className="w-3 h-3" />
                     </span>
                 </div>
@@ -21,7 +21,7 @@ export const RevenueChart = () => {
                 {[40, 65, 45, 70, 55, 80, 60, 90, 75, 85, 95, 100].map((h, i) => (
                     <div
                         key={i}
-                        className="flex-1 bg-white hover:bg-primary transition-colors rounded-t-sm"
+                        className="flex-1 bg-text-primary hover:bg-primary transition-colors rounded-t-sm"
                         style={{ height: `${h}%`, opacity: 0.1 + (i * 0.05) }}
                     />
                 ))}

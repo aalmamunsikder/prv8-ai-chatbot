@@ -39,14 +39,14 @@ export default function WalletPage() {
 
     return (
         <div className="space-y-12 pb-20">
-            <h1 className="text-4xl font-serif text-white">Digital Wallet</h1>
+            <h1 className="text-4xl font-serif text-text-primary dark:text-white">Digital Wallet</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
 
                 {/* Visual Card Section */}
                 <div className="lg:col-span-2 space-y-8">
 
-                    {/* The 3D Metal Card */}
+                    {/* The 3D Metal Card - Keeping Noir Aesthetic */}
                     <motion.div
                         ref={ref}
                         onMouseMove={handleMouseMove}
@@ -58,7 +58,7 @@ export default function WalletPage() {
                         }}
                         className="relative aspect-[1.586] rounded-3xl cursor-pointer perspective-1000"
                     >
-                        {/* Card Container - moves with tilt */}
+                        {/* Card Container - moves with tilt - ALWAYS DARK (Noir) */}
                         <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl bg-[#0a0a0a] border border-white/10">
 
                             {/* Texture Layers */}
@@ -118,28 +118,28 @@ export default function WalletPage() {
                         </div>
                     </motion.div>
 
-                    {/* Quick Stats Grid */}
+                    {/* Quick Stats Grid - Adapted for Light Mode */}
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                            <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Month Spend</p>
-                            <p className="text-2xl text-white font-serif">$12,450</p>
+                        <div className="p-6 rounded-3xl bg-surface-alt dark:bg-white/5 border border-border-subtle dark:border-white/5 hover:border-border dark:hover:border-white/10 transition-colors">
+                            <p className="text-text-muted dark:text-white/40 text-xs uppercase tracking-widest mb-2">Month Spend</p>
+                            <p className="text-2xl text-text-primary dark:text-white font-serif">$12,450</p>
                         </div>
-                        <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                            <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Points Earned</p>
+                        <div className="p-6 rounded-3xl bg-surface-alt dark:bg-white/5 border border-border-subtle dark:border-white/5 hover:border-border dark:hover:border-white/10 transition-colors">
+                            <p className="text-text-muted dark:text-white/40 text-xs uppercase tracking-widest mb-2">Points Earned</p>
                             <p className="text-2xl text-primary font-serif">45,200</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Transactions Table Section */}
+                {/* Transactions Table Section - Adapted for Light Mode */}
                 <div className="lg:col-span-3 space-y-6">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-6">
-                        <h2 className="text-xl text-white font-serif">Transaction History</h2>
+                    <div className="flex items-center justify-between border-b border-border-subtle dark:border-white/10 pb-6">
+                        <h2 className="text-xl text-text-primary dark:text-white font-serif">Transaction History</h2>
                         <div className="flex gap-2">
-                            <button className="p-2 rounded-full border border-white/10 hover:bg-white text-white hover:text-black transition-colors">
+                            <button className="p-2 rounded-full border border-border-subtle dark:border-white/10 hover:bg-surface-alt dark:hover:bg-white text-text-muted dark:text-white hover:text-text-primary dark:hover:text-black transition-colors">
                                 <Plus className="w-4 h-4" />
                             </button>
-                            <button className="p-2 rounded-full border border-white/10 hover:bg-white text-white hover:text-black transition-colors">
+                            <button className="p-2 rounded-full border border-border-subtle dark:border-white/10 hover:bg-surface-alt dark:hover:bg-white text-text-muted dark:text-white hover:text-text-primary dark:hover:text-black transition-colors">
                                 <Download className="w-4 h-4" />
                             </button>
                         </div>
@@ -149,23 +149,23 @@ export default function WalletPage() {
                         {[
                             { name: 'The Setai Hotel', date: 'June 9', cat: 'Travel', amount: '-$2,450.00', icon: 'H' },
                             { name: 'Komodo Miami', date: 'June 7', cat: 'Dining', amount: '-$385.40', icon: 'D' },
-                            { name: 'Refund: Deposit', date: 'June 6', cat: 'Credit', amount: '+$500.00', text: 'text-emerald-400', icon: 'R' },
+                            { name: 'Refund: Deposit', date: 'June 6', cat: 'Credit', amount: '+$500.00', text: 'text-emerald-500', icon: 'R' },
                             { name: 'Uber Black', date: 'June 6', cat: 'Transport', amount: '-$85.00', icon: 'T' },
                             { name: 'American Airlines', date: 'June 1', cat: 'Travel', amount: '-$1,240.00', icon: 'A' },
                         ].map((tx, i) => (
-                            <div key={i} className="group p-4 rounded-2xl hover:bg-white/5 transition-colors flex items-center justify-between cursor-pointer border border-transparent hover:border-white/5">
+                            <div key={i} className="group p-4 rounded-2xl hover:bg-surface-alt dark:hover:bg-white/5 transition-colors flex items-center justify-between cursor-pointer border border-transparent hover:border-border-subtle dark:hover:border-white/5">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white/40 font-serif text-lg group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                    <div className="w-12 h-12 rounded-full bg-surface-alt dark:bg-white/5 flex items-center justify-center text-text-muted dark:text-white/40 font-serif text-lg group-hover:bg-primary/20 group-hover:text-primary transition-colors">
                                         {tx.icon}
                                     </div>
                                     <div>
-                                        <h3 className="text-white font-medium group-hover:text-primary transition-colors">{tx.name}</h3>
-                                        <p className="text-white/30 text-xs mt-0.5">{tx.date} • {tx.cat}</p>
+                                        <h3 className="text-text-primary dark:text-white font-medium group-hover:text-primary transition-colors">{tx.name}</h3>
+                                        <p className="text-text-muted dark:text-white/30 text-xs mt-0.5">{tx.date} • {tx.cat}</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <p className={`font-mono text-sm ${tx.text || 'text-white'}`}>{tx.amount}</p>
-                                    <div className="opacity-0 group-hover:opacity-100 text-[10px] text-white/40 uppercase tracking-wider flex items-center justify-end gap-1 mt-1 transition-opacity">
+                                    <p className={`font-mono text-sm ${tx.text || 'text-text-primary dark:text-white'}`}>{tx.amount}</p>
+                                    <div className="opacity-0 group-hover:opacity-100 text-[10px] text-text-muted dark:text-white/40 uppercase tracking-wider flex items-center justify-end gap-1 mt-1 transition-opacity">
                                         Details <ArrowUpRight className="w-3 h-3" />
                                     </div>
                                 </div>
