@@ -90,11 +90,16 @@ interface Val8ContextType {
 
 const Val8Context = createContext<Val8ContextType | undefined>(undefined);
 
-export const Val8Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
+interface Val8ProviderProps {
+  children: ReactNode;
+  initialExpanded?: boolean;
+}
+
+export const Val8Provider: React.FC<Val8ProviderProps> = ({ children, initialExpanded = false }) => {
   const { user: authUser, login: authLogin, logout: authLogout } = useAuth();
 
   const [currentFrame, setCurrentFrame] = useState(1);
-  const [isExpanded, setIsExpanded] = useState(false); // Start minimized
+  const [isExpanded, setIsExpanded] = useState(initialExpanded); // Use prop for initial state
   const [userIntent, setUserIntent] = useState<UserIntent>(null);
   const [tripContext, setTripContext] = useState<TripContext>({});
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
