@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Minimize2, Maximize2, User, Sparkles } from 'lucide-react';
+import { MessageSquare, X, Minimize2, Maximize2, User, Sparkles, Bot } from 'lucide-react';
 import { useVal8, Val8Provider } from './Val8Context';
 import { ChatInterface } from './ChatInterface';
 import { BookingFlow } from './BookingFlow';
@@ -32,26 +32,51 @@ const Val8WidgetContent: React.FC = () => {
     } = useVal8();
     const [showLoader, setShowLoader] = useState(false);
 
-    // Handle incoming widget actions
+    // Handle incoming widget actions and external messages
     React.useEffect(() => {
+        // Handle internal actions
         if (activeAction) {
-            // Add user message
-            addMessage({
-                sender: 'user',
-                text: activeAction
-            });
-
-            // Simulate AI response
+            addMessage({ sender: 'user', text: activeAction });
             setTimeout(() => {
                 addMessage({
                     sender: 'val8',
                     text: `I can certainly help you with "${activeAction}". What specific details would you like to know?`
                 });
             }, 1000);
-
             clearActiveAction();
         }
-    }, [activeAction, addMessage, clearActiveAction]);
+
+        // Handle external window messages
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'LUMINE_WIDGET_SEARCH' && event.data.query) {
+                // Determine layout on mobile vs desktop
+                if (window.innerWidth < 768) {
+                    setView('chat'); // Force chat view on mobile
+                }
+
+                // Force widget expansion
+                setIsExpanded(true);
+
+                addMessage({
+                    sender: 'user',
+                    text: `Search for: ${event.data.query}`
+                });
+
+                // Simulate AI finding results
+                setTimeout(() => {
+                    addMessage({
+                        sender: 'val8',
+                        text: `I found some great options for "${event.data.query}". Would you like to see the top recommendations?`
+                    });
+                }, 1000);
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, [activeAction, addMessage, clearActiveAction, setView, setIsExpanded]);
+
+
 
     const handleExpand = () => {
         setIsExpanded(true);
@@ -101,7 +126,7 @@ const Val8WidgetContent: React.FC = () => {
                                     <span className="font-serif font-bold text-surface text-lg">V</span>
                                 </div>
                                 <div>
-                                    <h1 className="text-text-primary dark:text-white font-serif text-lg tracking-wide">{isDemoMode ? 'Visit Dubai AI' : 'Val8'}</h1>
+                                    <h1 className="text-text-primary dark:text-white font-serif text-lg tracking-wide">{isDemoMode ? 'Talk to Petra' : 'Val8'}</h1>
                                     <p className={`text-[10px] uppercase tracking-widest font-medium ${isDemoMode ? 'text-[#C5A572]' : 'text-primary'}`}>
                                         {isDemoMode ? 'Powered by Prv8' : 'Powered by PRV8.'}
                                     </p>
@@ -225,13 +250,17 @@ const Val8WidgetContent: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={handleExpand}
-                        className="bg-surface text-text-primary dark:text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 border border-border-subtle dark:border-white/10 group z-50
+                        className="bg-surface text-text-primary dark:text-white pl-2 pr-6 py-2 rounded-full shadow-2xl flex items-center gap-3 border border-border-subtle dark:border-white/10 group z-50
                                  max-md:bottom-4 max-md:right-4 max-md:transform max-md:scale-90"
                     >
-                        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform">
-                            <span className="font-serif font-bold text-surface text-lg">V</span>
+                        <div className="w-10 h-10 rounded-full bg-primary overflow-hidden border-2 border-white dark:border-white/20 shadow-lg relative">
+                            <img
+                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150"
+                                alt="Petra"
+                                className="w-full h-full object-cover"
+                            />
                         </div>
-                        <span className="font-medium tracking-wide pr-2">Plan Your Trip</span>
+                        <span className="font-medium tracking-wide">Talk to Petra</span>
                     </motion.button>
                 )}
             </AnimatePresence>

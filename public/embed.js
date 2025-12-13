@@ -131,10 +131,10 @@
 
     // HTML Structure matching Val8Widget.tsx:
     launcher.innerHTML = `
-        <div class="icon-box">
-            <span class="icon-symbol">V</span>
+        <div class="icon-box" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="Petra" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-        <span class="text">Plan Your Trip</span>
+        <span class="text">Talk to Petra</span>
     `;
     document.body.appendChild(launcher);
 
@@ -173,6 +173,30 @@
     }
 
     launcher.addEventListener('click', toggleWidget);
+
+    // External API for DMC / Integrations
+    window.Prv8 = {
+        open: () => {
+            if (!isOpen) toggleWidget();
+        },
+        close: () => {
+            if (isOpen) closeWidget();
+        },
+        search: (query) => {
+            if (!isOpen) toggleWidget();
+            // Send search query to widget
+            setTimeout(() => {
+                iframe.contentWindow.postMessage({ type: 'LUMINE_WIDGET_SEARCH', query: query }, '*');
+            }, 500); // Wait for open animation
+        }
+    };
+
+    // Listen for custom events from host site (e.g., search bar)
+    window.addEventListener('prv8-search', (e) => {
+        if (e.detail && e.detail.query) {
+            window.Prv8.search(e.detail.query);
+        }
+    });
 
     // Listen for messages from inside
     window.addEventListener('message', (event) => {

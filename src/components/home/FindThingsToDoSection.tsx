@@ -4,16 +4,28 @@ import React, { useState } from 'react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { ArrowUpRight } from 'lucide-react';
 
-const filters = ["All", "Gastronomy", "Adventure", "Shopping", "Art & Culture", "Relaxation", "Nature"];
+import { experiences } from '@/data/experiences';
+import Link from 'next/link';
 
-const items = [
-    { type: "Adventure", image: "/find-adventure.png", title: "Desert Safari", subtitle: "Dune Bashing & Sunset" },
-    { type: "Nature", image: "/find-nature.png", title: "Miracle Garden", subtitle: "Floral Wonderland" },
-    { type: "Gastronomy", image: "/find-gastronomy.png", title: "Underwater Dining", subtitle: "Michelin Star Experience" },
-    { type: "Shopping", image: "/find-shopping.png", title: "Fashion Avenue", subtitle: "Global Luxury Brands" },
-    { type: "Art & Culture", image: "/find-culture.png", title: "Museum of the Future", subtitle: "Witness Tomorrow" },
-    { type: "Relaxation", image: "/find-relaxation.png", title: "Royal Beach Club", subtitle: "Serenity by the Sea" },
-];
+const filters = ["All", "Gastronomy", "Adventure", "Shopping", "Art & Culture", "Relaxation", "Nature", "Luxury"];
+
+// Map manually or filter generally. Let's filter by relevant IDs for specific curated list.
+const curatedIds = ['desert-safari', 'miracle-garden', 'underwater-dining', 'fashion-avenue', 'future-museum', 'royal-beach-club'];
+// Map and ensure category matches filter format (e.g. "Art & Culture" vs "Culture")
+const items = curatedIds.map(id => {
+    const e = experiences.find(xp => xp.id === id);
+    if (!e) return null;
+    let type = e.category;
+    if (e.id === 'future-museum') type = 'Art & Culture'; // remap for filter match
+
+    return {
+        type: type,
+        image: e.image,
+        title: e.title,
+        subtitle: e.subtitle,
+        slug: e.slug
+    };
+}).filter(Boolean).slice(0, 6) as { type: string, image: string, title: string, subtitle: string, slug: string }[];
 
 export const FindThingsToDoSection: React.FC = () => {
     const [activeFilter, setActiveFilter] = useState("All");
@@ -58,32 +70,34 @@ export const FindThingsToDoSection: React.FC = () => {
 
                 {/* Content Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredItems.map((item, index) => (
+                    {filteredItems.slice(0, 6).map((item, index) => (
                         <ScrollReveal key={`${item.title}-${index}`} delay={index * 100}>
-                            <div className="group relative h-[400px] overflow-hidden rounded-[2rem] cursor-pointer bg-surface-alt" style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}>
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                            <Link href={`/experience/${item.slug}`} className="block h-full">
+                                <div className="group relative h-[400px] overflow-hidden rounded-[2rem] cursor-pointer bg-surface-alt" style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}>
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
 
-                                <div className="absolute top-6 right-6 w-10 h-10 rounded-full glass border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                                    <ArrowUpRight className="w-5 h-5 text-white" />
-                                </div>
+                                    <div className="absolute top-6 right-6 w-10 h-10 rounded-full glass border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                                        <ArrowUpRight className="w-5 h-5 text-white" />
+                                    </div>
 
-                                <div className="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <span className="inline-block px-4 py-1.5 rounded-full bg-black/40 border border-white/20 text-[10px] text-white font-bold tracking-widest uppercase mb-3 backdrop-blur-md shadow-sm">
-                                        {item.type}
-                                    </span>
-                                    <h3 className="text-2xl font-serif text-white mb-1 group-hover:text-primary transition-colors">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-white/60 text-sm font-medium">
-                                        {item.subtitle}
-                                    </p>
+                                    <div className="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                        <span className="inline-block px-4 py-1.5 rounded-full bg-black/40 border border-white/20 text-[10px] text-white font-bold tracking-widest uppercase mb-3 backdrop-blur-md shadow-sm">
+                                            {item.type}
+                                        </span>
+                                        <h3 className="text-2xl font-serif text-white mb-1 group-hover:text-primary transition-colors">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-white/60 text-sm font-medium">
+                                            {item.subtitle}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </ScrollReveal>
                     ))}
                 </div>

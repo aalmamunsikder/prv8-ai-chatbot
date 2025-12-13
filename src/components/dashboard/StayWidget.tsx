@@ -42,7 +42,7 @@ export const StayWidget: React.FC<{ data: DashboardState['stay'] }> = ({ data })
                     </span>
                 </div>
                 <p className="w-full bg-transparent border-none p-0 text-[10px] text-text-muted/80 dark:text-white/40 mt-1 italic focus:ring-0 focus:outline-none">
-                    Check-out required within 24 hours
+                    Cancellation is only available within 24 hours.
                 </p>
             </div>
         </div>

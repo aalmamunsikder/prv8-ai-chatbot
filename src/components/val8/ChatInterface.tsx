@@ -92,7 +92,7 @@ export const ChatInterface: React.FC = () => {
     },
     {
       userText: "Yes.",
-      aiResponse: "Done. I'd recommend the One&Only Royal Mirage for your stay. Arabian Court Suite with Sea View. Secure it?",
+      aiResponse: "Done. I'd recommend The Royal Mirage for your stay. Arabian Court Suite with Sea View. Secure it?",
       nextStep: 4
     },
     {
