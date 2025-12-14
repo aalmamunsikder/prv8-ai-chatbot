@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 import { Send, MapPin, Compass, Plane, Search } from 'lucide-react';
 import { useVal8, HotelCard } from './Val8Context';
 import { CardStack } from './CardStack';
+import { ChatCarousel } from './ChatCarousel';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { TOP_ATTRACTIONS, UPCOMING_EVENTS } from '@/data/recommendations';
 
 const INITIAL_HOTELS: HotelCard[] = [
   {
@@ -59,7 +61,7 @@ const MODERN_HOTELS: HotelCard[] = [
 ];
 
 export const ChatInterface: React.FC = () => {
-  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState, isDemoMode, demoStep, setDemoStep, isExpanded, setDemoPhase } = useVal8();
+  const { chatHistory, addMessage, userIntent, setUserIntent, setSelectedHotel, setBookingState, isDemoMode, demoStep, setDemoStep, isExpanded, setDemoPhase, setView } = useVal8();
   const { speak, stop } = useTextToSpeech();
   const [inputValue, setInputValue] = useState('');
   const [cards, setCards] = useState<HotelCard[]>(INITIAL_HOTELS);
@@ -249,6 +251,50 @@ export const ChatInterface: React.FC = () => {
       type: 'text',
     });
 
+    // Handle "hi" or "hello"
+    if (['hi', 'hello', 'hey'].includes(userText.toLowerCase())) {
+      setTimeout(() => {
+        // 1. Greeting
+        addMessage({
+          sender: 'val8',
+          text: "Hello! Welcome to Val8. I can help you discover the best of Dubai.",
+          type: 'text'
+        });
+
+        // 2. Attractions
+        setTimeout(() => {
+          addMessage({
+            sender: 'val8',
+            text: "Explore Top Attractions",
+            type: 'card-stack',
+            cards: TOP_ATTRACTIONS
+          });
+        }, 800);
+
+        // 3. Events
+        setTimeout(() => {
+          addMessage({
+            sender: 'val8',
+            text: "Upcoming Events",
+            type: 'card-stack',
+            cards: UPCOMING_EVENTS
+          });
+        }, 1600);
+
+        // 4. See All Button
+        setTimeout(() => {
+          addMessage({
+            sender: 'val8',
+            text: "Would you like to explore more?",
+            type: 'options',
+            options: ['< > View All Cards'] // Using special label for the button
+          });
+        }, 2400);
+
+      }, 500);
+      return;
+    }
+
     // FRAME 7: Modification Loop Logic
     if (hasShownCards) {
       // Simulate "thinking" and refining
@@ -306,6 +352,16 @@ export const ChatInterface: React.FC = () => {
         });
         setHasShownCards(true);
       }, 1500);
+    } else if (action === '< > View All Cards') {
+      // Handle "See All" action - for now, we can show a text message or trigger a dashboard view.
+      setTimeout(() => {
+        addMessage({
+          sender: 'val8',
+          text: "Here are all the recommendations.",
+          type: 'text'
+        });
+        setView('dashboard');
+      }, 500);
     } else {
       // Default response for other actions
       setTimeout(() => {
@@ -437,8 +493,19 @@ export const ChatInterface: React.FC = () => {
                 <div className="text-text-secondary dark:text-white/80 border-l border-border-subtle dark:border-white/10 pl-4 p-4 text-sm font-light mb-2">
                   {msg.text}
                 </div>
-                {/* Only show stack for the latest card-stack message to avoid duplicates if multiple stacks exist in history */}
-                {i === chatHistory.length - 1 && (
+                {/* Render Carousel or Stack based on content preference */}
+                {(msg.type === 'card-stack' && msg.cards && (msg.cards[0]?.type === 'attraction' || msg.cards[0]?.type === 'event')) ? (
+                  <ChatCarousel
+                    cards={msg.cards}
+                    type={msg.cards[0]?.type as 'attraction' | 'event'}
+                    onSelect={handleHotelSelect}
+                  />
+                ) : (msg.type === 'card-stack' && msg.cards) ? (
+                  <CardStack cards={msg.cards} onSelect={handleHotelSelect} />
+                ) : null}
+
+                {/* Fallback for legacy messages using global cards state (if any) */}
+                {(msg.type === 'card-stack' && !msg.cards && i === chatHistory.length - 1) && (
                   <CardStack cards={cards} onSelect={handleHotelSelect} onRemove={handleRemoveCard} />
                 )}
               </div>

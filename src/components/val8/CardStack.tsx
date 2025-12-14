@@ -6,7 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Star, ArrowRight } from 'lucide-react';
 import { HotelCard } from './Val8Context';
 
-export const CardStack: React.FC<{ cards: HotelCard[], onSelect: (hotel: HotelCard) => void, onRemove: (id: string) => void }> = ({ cards, onSelect, onRemove }) => {
+export const CardStack: React.FC<{ cards: HotelCard[], onSelect: (hotel: HotelCard) => void, onRemove?: (id: string) => void }> = ({ cards: initialCards, onSelect, onRemove }) => {
+    const [cards, setCards] = React.useState(initialCards);
+
+    React.useEffect(() => {
+        setCards(initialCards);
+    }, [initialCards]);
+
+    const handleRemove = (id: string) => {
+        setCards(prev => prev.filter(c => c.id !== id));
+        if (onRemove) onRemove(id);
+    };
     return (
         <div className="relative h-[420px] w-full flex items-center justify-center mt-4 mb-8">
             <AnimatePresence>
@@ -27,7 +37,7 @@ export const CardStack: React.FC<{ cards: HotelCard[], onSelect: (hotel: HotelCa
                             dragConstraints={{ left: 0, right: 0 }}
                             onDragEnd={(_, info) => {
                                 if (info.offset.x > 100) {
-                                    onRemove(card.id);
+                                    handleRemove(card.id);
                                 }
                             }}
                             className="absolute w-[90%] h-[380px] bg-surface dark:glass-card dark:bg-black/80 shadow-[0_20px_50px_rgba(0,0,0,0.5)] cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden border border-border-subtle dark:border-white/10"
@@ -89,7 +99,7 @@ export const CardStack: React.FC<{ cards: HotelCard[], onSelect: (hotel: HotelCa
                                                 className="w-16 bg-transparent border-none p-0 text-primary font-medium focus:ring-0 focus:outline-none"
                                                 onClick={(e) => e.stopPropagation()}
                                             />
-                                            <span className="text-xs text-text-muted dark:text-white/40 font-light">/ night</span>
+                                            <span className="text-xs text-text-muted dark:text-white/40 font-light">{card.priceSuffix ?? '/ night'}</span>
                                         </div>
                                     </div>
                                     <button

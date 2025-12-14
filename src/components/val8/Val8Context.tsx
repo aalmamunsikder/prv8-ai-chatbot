@@ -20,6 +20,7 @@ export interface ChatMessage {
   text: string;
   type?: 'text' | 'options' | 'card-stack' | 'confirmation';
   options?: string[];
+  cards?: HotelCard[];
   timestamp: number;
 }
 
@@ -31,6 +32,10 @@ export interface HotelCard {
   rating: number;
   image: string;
   tags: string[];
+  priceSuffix?: string;
+  type?: 'hotel' | 'attraction' | 'event';
+  startDate?: string;
+  endDate?: string;
 }
 
 // Re-export type compatible with AuthContext or alias it
