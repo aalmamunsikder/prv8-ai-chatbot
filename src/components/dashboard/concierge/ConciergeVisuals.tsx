@@ -18,7 +18,7 @@ export const ConciergeVisuals: React.FC<ConciergeVisualsProps> = ({ mode, demoSt
                 {/* Generic Background */}
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2626&auto=format&fit=crop"
+                        src="/images/demo/destination-skyline.png"
                         alt="Concierge Abstract"
                         className="w-full h-full object-cover opacity-20 blur-sm mix-blend-overlay"
                     />
@@ -62,13 +62,13 @@ export const ConciergeVisuals: React.FC<ConciergeVisualsProps> = ({ mode, demoSt
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1 }}
                         src={
-                            demoStep === 0 ? "https://images.unsplash.com/photo-1546412414-e1885259563a?q=80&w=1974&auto=format&fit=crop" : // Dubai Skyline
-                                demoStep === 1 ? "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop" : // Flight
-                                    (demoStep === 2 || demoStep === 3) ? "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop" : // Luxury Hotel
-                                        demoStep === 4 ? "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop" : // Luxury Car
-                                            demoStep === 5 ? "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop" : // Dining
-                                                demoStep === 6 ? "https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=2070&auto=format&fit=crop" : // Shopping
-                                                    "https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?q=80&w=1974&auto=format&fit=crop" // Desert
+                            demoStep === 0 ? "/images/demo/destination-skyline.png" : // Dubai Skyline
+                                demoStep === 1 ? "/images/demo/flight-exterior.png" : // Flight
+                                    (demoStep === 2 || demoStep === 3) ? "/images/demo/hotel-exterior.png" : // Luxury Hotel
+                                        demoStep === 4 ? "/images/demo/airport-terminal.png" : // Luxury Car (Pickup Context)
+                                            demoStep === 5 ? "/images/demo/dining-interior.png" : // Dining
+                                                demoStep === 6 ? "/images/demo/shopping-sunscreen.png" : // Shopping
+                                                    "/images/demo/destination-desert.png" // Desert
                         }
                         alt="Dubai Context"
                         className="w-full h-full object-cover blur-sm absolute inset-0 mix-blend-overlay"
@@ -173,8 +173,8 @@ export const ConciergeVisuals: React.FC<ConciergeVisualsProps> = ({ mode, demoSt
                                 <span className="text-text-muted dark:text-white/40 text-xs ml-2">(4.9/5)</span>
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop" className="rounded-xl h-32 w-full object-cover" />
-                                <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2070&auto=format&fit=crop" className="rounded-xl h-32 w-full object-cover" />
+                                <img src="/images/demo/hotel-bedroom.png" className="rounded-xl h-32 w-full object-cover" />
+                                <img src="/images/demo/hotel-pool.png" className="rounded-xl h-32 w-full object-cover" />
                             </div>
                             <div className="glass-panel p-4 rounded-xl border border-border-subtle dark:border-white/10 bg-surface-alt/50 dark:bg-white/5">
                                 <div className="flex justify-between items-center">
@@ -216,7 +216,7 @@ export const ConciergeVisuals: React.FC<ConciergeVisualsProps> = ({ mode, demoSt
                     {/* STEP 5: DINING */}
                     {demoStep === 5 && (
                         <motion.div key="step4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop" className="w-full h-48 object-cover rounded-2xl mb-4 opacity-80" />
+                            <img src="/images/demo/dining-interior.png" className="w-full h-48 object-cover rounded-2xl mb-4 opacity-80" />
                             <div className="flex justify-between items-end mb-2">
                                 <div>
                                     <h2 className="text-3xl font-serif text-text-primary dark:text-white">Ossiano</h2>
@@ -278,7 +278,7 @@ export const ConciergeVisuals: React.FC<ConciergeVisualsProps> = ({ mode, demoSt
                                 Signature Experience
                             </span>
                             <h2 className="text-3xl font-serif text-text-primary dark:text-white leading-tight">Private Desert Safari</h2>
-                            <img src="https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?q=80&w=1974&auto=format&fit=crop" className="w-full h-40 object-cover rounded-xl opacity-90" />
+                            <img src="/images/demo/destination-desert.png" className="w-full h-40 object-cover rounded-xl opacity-90" />
                             <div className="space-y-2">
                                 <div className="flex items-start gap-3">
                                     <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5" />

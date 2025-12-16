@@ -8,7 +8,7 @@ export const StayWidget: React.FC<{ data: DashboardState['stay'] }> = ({ data })
     return (
         <div className="h-full relative group cursor-pointer">
             <Image
-                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop"
+                src="/images/demo/hotel-exterior.png"
                 alt="Hotel"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"

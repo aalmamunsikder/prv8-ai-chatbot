@@ -1,11 +1,19 @@
 import React from 'react';
 import { Car } from 'lucide-react';
+import Image from 'next/image';
 
 import { DashboardState } from '../val8/Dashboard';
 
 export const RideWidget: React.FC<{ data: DashboardState['ride'] }> = ({ data }) => {
     return (
-        <div className="h-full p-5 flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="h-full p-5 flex flex-col items-center justify-center relative overflow-hidden group">
+            <Image
+                src="/images/demo/airport-terminal.png"
+                alt="Ride"
+                fill
+                className="object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, 300px"
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-surface-alt/50 to-transparent dark:from-white/5" />
 
             <div className="relative z-10 text-center w-full px-4">

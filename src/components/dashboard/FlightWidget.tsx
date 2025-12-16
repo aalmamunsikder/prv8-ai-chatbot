@@ -10,7 +10,7 @@ export const FlightWidget: React.FC<{ status?: 'pending' | 'completed', data: Da
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop"
+                    src="/images/demo/flight-exterior.png"
                     alt="Flight"
                     fill
                     className="object-cover opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"

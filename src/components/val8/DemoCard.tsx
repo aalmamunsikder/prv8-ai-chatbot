@@ -197,7 +197,7 @@ export const DemoCard: React.FC = () => {
                                 <ActivityWidget
                                     title="Waterfront Kitchen"
                                     subtitle="$30-50 | American"
-                                    image="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop"
+                                    image="/images/demo/dining-seafood.png"
                                     category="Dining"
                                 />
                             </div>
@@ -212,7 +212,7 @@ export const DemoCard: React.FC = () => {
                                     title="SPF 50 Sunscreen"
                                     subtitle="124k ratings"
                                     price="$8.97"
-                                    image="https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=2070&auto=format&fit=crop"
+                                    image="/images/demo/shopping-sunscreen.png"
                                     category="Shopping"
                                 />
                             </div>
@@ -226,7 +226,7 @@ export const DemoCard: React.FC = () => {
                                 <ActivityWidget
                                     title="Sunrise Paddle Boarding"
                                     subtitle="Guided Tour"
-                                    image="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
+                                    image="/images/demo/experience-paddle.png"
                                     category="Experiences"
                                 />
                             </div>
